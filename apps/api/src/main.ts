@@ -6,6 +6,8 @@ import { ValidationPipe, Logger } from "@nestjs/common";
 import { SwaggerModule, DocumentBuilder } from "@nestjs/swagger";
 import { AppModule } from "./app.module";
 
+let cachedApp: any;
+
 export async function bootstrap() {
   const logger = new Logger("Bootstrap");
   const port = process.env.NESTJS_PORT || process.env.API_PORT || 4000;
@@ -44,9 +46,19 @@ export async function bootstrap() {
     await app.listen(port);
     logger.log(`🚀 Electify NestJS Backend running at: http://localhost:${port}/api`);
     logger.log(`📖 Swagger API Documentation available at: http://localhost:${port}/api/docs`);
+  } else {
+    await app.init();
   }
 
   return app;
+}
+
+export default async function handler(req: any, res: any) {
+  if (!cachedApp) {
+    cachedApp = await bootstrap();
+  }
+  const expressInstance = cachedApp.getHttpAdapter().getInstance();
+  return expressInstance(req, res);
 }
 
 if (!process.env.VERCEL) {
