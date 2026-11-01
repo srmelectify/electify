@@ -8,25 +8,28 @@
 1. [Executive Summary & Quick Reference](#1-executive-summary--quick-reference)
 2. [Role & Permission Matrix](#2-role--permission-matrix)
 3. [Student Guide](#3-student-guide)
-   - [3.1 Signing In & Account Setup](#31-signing-in--account-setup)
-   - [3.2 Student Dashboard Overview](#32-student-dashboard-overview)
-   - [3.3 Subject Explorer & Syllabus Preview](#33-subject-explorer--syllabus-preview)
-   - [3.4 Registration Countdown & Live Window](#34-registration-countdown--live-window)
-   - [3.5 Selecting & Locking Elective Choices](#35-selecting--locking-elective-choices)
-   - [3.6 Instant Receipt & Official PDF Download](#36-instant-receipt--official-pdf-download)
-   - [3.7 Password Recovery & Help](#37-password-recovery--help)
+   - [3.1 First-Time Sign-Up & Joining Your Class Section](#31-first-time-sign-up--joining-your-class-section)
+   - [3.2 Returning Student Sign-In](#32-returning-student-sign-in)
+   - [3.3 Student Dashboard Overview](#33-student-dashboard-overview)
+   - [3.4 Subject Explorer & Syllabus Preview](#34-subject-explorer--syllabus-preview)
+   - [3.5 Registration Countdown & Live Window](#35-registration-countdown--live-window)
+   - [3.6 Selecting & Locking Elective Choices](#36-selecting--locking-elective-choices)
+   - [3.7 Instant Receipt & Official PDF Download](#37-instant-receipt--official-pdf-download)
+   - [3.8 Password Recovery & Help](#38-password-recovery--help)
 4. [Class Tutor Guide](#4-class-tutor-guide)
    - [4.1 Staff Login & Academic Session Selection](#41-staff-login--academic-session-selection)
-   - [4.2 Section Switcher & Claiming Multi-Sections](#42-section-switcher--claiming-multi-sections)
-   - [4.3 Class Roster & Student Live Tracking](#43-class-roster--student-live-tracking)
-   - [4.4 Authorizing Student Password / PIN Resets](#44-authorizing-student-password--pin-resets)
-   - [4.5 Section Registration Reports & PDF Export](#45-section-registration-reports--pdf-export)
+   - [4.2 Generating Class Signup Codes for Students](#42-generating-class-signup-codes-for-students)
+   - [4.3 Section Switcher & Claiming Multi-Sections](#43-section-switcher--claiming-multi-sections)
+   - [4.4 Class Roster & Student Live Tracking](#44-class-roster--student-live-tracking)
+   - [4.5 Authorizing Student Password / PIN Resets](#45-authorizing-student-password--pin-resets)
+   - [4.6 Section Registration Reports & PDF Export](#46-section-registration-reports--pdf-export)
 5. [Course Coordinator Guide](#5-course-coordinator-guide)
-   - [5.1 Academic Session & Year Server Workflow](#51-academic-session--year-server-workflow)
-   - [5.2 Elective Catalogue & Seat Allocation](#52-elective-catalogue--seat-allocation)
-   - [5.3 Registration Window Scheduling & Auto-Close](#53-registration-window-scheduling--auto-close)
-   - [5.4 Live Surveillance & Seat Meter Monitor](#54-live-surveillance--seat-meter-monitor)
-   - [5.5 Audit Trail, Registration Replay & Master Reports](#55-audit-trail-registration-replay--master-reports)
+   - [5.1 Staff Onboarding & Generating Invite Codes](#51-staff-onboarding--generating-invite-codes)
+   - [5.2 Academic Session & Year Server Workflow](#52-academic-session--year-server-workflow)
+   - [5.3 Elective Catalogue & Seat Allocation](#53-elective-catalogue--seat-allocation)
+   - [5.4 Registration Window Scheduling & Auto-Close](#54-registration-window-scheduling--auto-close)
+   - [5.5 Live Surveillance & Seat Meter Monitor](#55-live-surveillance--seat-meter-monitor)
+   - [5.6 Audit Trail, Registration Replay & Master Reports](#56-audit-trail-registration-replay--master-reports)
 6. [System Administrator Guide](#6-system-administrator-guide)
    - [6.1 Root Security & Single-Session Sentinel](#61-root-security--single-session-sentinel)
    - [6.2 Global System Settings & Maintenance Mode](#62-global-system-settings--maintenance-mode)
@@ -107,16 +110,33 @@ flowchart TD
 
 ## 3. Student Guide
 
-### 3.1 Signing In & Account Setup
-1. Open your browser and navigate to `/login`.
+### 3.1 First-Time Sign-Up & Joining Your Class Section
+If you do not have an Electify student account yet, you must complete the one-time **Join Class** onboarding process:
+1. Obtain the official **Class Signup Code** (format: `EFCL-XXXX`) from your Class Tutor.
+2. Open your web browser and navigate to: **[https://electifysrm.vercel.app/join](https://electifysrm.vercel.app/join)** (or click **"Join with Class Code"** on the login page).
+3. Type or paste your Class Signup Code.
+4. The system validates the code in real time and displays your verified class details:
+   - Programme (e.g. *B.Tech Computer Science & Engineering*)
+   - Department, Section (e.g. *Section A*), and Batch Year
+   - Class Tutor's Name and available enrollment spots
+5. Complete your student profile:
+   - **Full Name**: Enter your official name as registered with SRMIST.
+   - **Official SRM Email**: Must be an `@srmist.edu.in` address (e.g. `rs1234@srmist.edu.in`).
+   - **SRM Register Number**: Enter your official roll number (e.g. `RA2411003010001`).
+   - **Password**: Choose a secure password (minimum 8 characters, letters & numbers). Confirm password by re-typing it.
+6. Click **Create Student Account & Join Class**.
+7. Your account is created instantly and mapped to your exact class roster, redirecting you directly to the Student Dashboard!
+
+### 3.2 Returning Student Sign-In
+Once you have created your account:
+1. Navigate to: **[https://electifysrm.vercel.app/login](https://electifysrm.vercel.app/login)**.
 2. Enter your **SRM Register Number** (e.g. `RA2411003010001`) or official SRM email.
-3. Enter your account password.
-4. Click **Sign in to Electify**.
+3. Enter your password and click **Sign in to Electify**.
 
 > [!NOTE]
 > Electify enforces a **Single Active Session** security policy. If you log in on a second device or browser tab, your previous session is automatically revoked to prevent unauthorized access and ticket sniping.
 
-### 3.2 Student Dashboard Overview
+### 3.3 Student Dashboard Overview
 Upon logging in, your personalized dashboard displays:
 - **Student Profile**: Name, Register Number, Department, Batch, and Section.
 - **Event Status Banner**: Indicates whether the registration window is **Upcoming**, **Live**, or **Closed**.
@@ -175,19 +195,28 @@ Before the registration window opens, you can thoroughly review all offered elec
 ## 4. Class Tutor Guide
 
 ### 4.1 Staff Login & Academic Session Selection
-1. Navigate to `/login`.
-2. Sign in with your faculty email (e.g., `angelb1@srmist.edu.in`) and password.
+1. Navigate to: **[https://electifysrm.vercel.app/login](https://electifysrm.vercel.app/login)**.
+2. Sign in with your faculty email (e.g., `angelb1@srmist.edu.in`) and password: `Electify@2026`.
 3. Upon first sign-in, the **Academic Session Selector** (`/faculty/session-select`) appears.
 4. Select the current working academic year (e.g., `2025–2026 Even Semester`).
 5. Click **Enter Workspace**.
 
-### 4.2 Section Switcher & Claiming Multi-Sections
+### 4.2 Generating Class Signup Codes for Students
+As a Class Tutor, you onboard your students by generating an official Class Signup Code:
+1. Make sure your active class is selected in the top-bar section switcher (e.g. `CSE-AIML Section A`).
+2. Navigate to **Section Roster** (`/faculty/section`) or **Students** (`/faculty/students`).
+3. Click **Generate Class Signup Code**.
+4. Set the maximum number of students (e.g. 60) and expiration date.
+5. Click **Generate Code**. The system produces an official enrollment code (e.g. `EFCL-8921`).
+6. Share this code with your class section along with the onboarding link: **[https://electifysrm.vercel.app/join](https://electifysrm.vercel.app/join)**.
+
+### 4.3 Section Switcher & Claiming Multi-Sections
 - Electify allows tutors to manage multiple sections across batches.
 - In the top navigation bar, locate the **Active Section Switcher** pill:
   * Click the dropdown to switch your active view between assigned sections (e.g. `CSE-AIML Section A` ↔ `CSE-AIML Section B`).
   * If you need to manage a new section, go to **Assign Sections** (`/faculty/assign-sections`), select your newly assigned section from the catalog, and click **Claim Section**.
 
-### 4.3 Class Roster & Student Live Tracking
+### 4.4 Class Roster & Student Live Tracking
 1. Open **Section Roster** (`/faculty/section`).
 2. The roster displays every enrolled student in your selected class:
    - Register Number, Student Full Name, and SRM Email
@@ -195,26 +224,38 @@ Before the registration window opens, you can thoroughly review all offered elec
    - Chosen Elective Subject & Timestamp of submission
 3. Filter by "Unregistered Only" to quickly identify students who have not yet selected their electives before the window deadline.
 
-### 4.4 Authorizing Student Password / PIN Resets
+### 4.5 Authorizing Student Password / PIN Resets
 If a student in your class loses access to their account:
 1. In the sidebar, navigate to **Students** (`/faculty/students`).
 2. Search for the student by Register Number or Name.
-3. Click **Authorize PIN Reset**.
-4. The system issues a 15-minute temporary reset link or updates their initial PIN, allowing the student to sign in and choose a new password.
+3. Verify the student's physical identity in your department.
+4. Click **Authorize PIN Reset**.
+5. The system issues a 15-minute temporary reset link or updates their initial PIN, allowing the student to sign in and choose a new password.
 
-### 4.5 Section Registration Reports & PDF Export
+### 4.6 Section Registration Reports & PDF Export
 1. Navigate to **Tutor Reports** (`/faculty/tutor-reports`).
 2. Review aggregated metrics:
    - Total students in section
    - Total completed registrations (% turnout)
    - Distribution of students across elective courses
 3. Click **Export Class List (PDF)** to download an official attendance roster for the Head of Department.
+3. Click **Export Class List (PDF)** to download an official attendance roster for the Head of Department.
 
 ---
 
 ## 5. Course Coordinator Guide
 
-### 5.1 Academic Session & Year Server Workflow
+### 5.1 Staff Onboarding & Generating Invite Codes
+Course Coordinators can provision new Class Tutor accounts securely:
+1. Sign in at: **[https://electifysrm.vercel.app/login](https://electifysrm.vercel.app/login)** with coordinator credentials (e.g., `sabenabanu@srmist.edu.in` / `Electify@2026`).
+2. Navigate to **Invite Codes** (`/faculty/invites`).
+3. Click **Generate Staff Invite**:
+   - Role: **Class Tutor** (Prefix: `EFCT-`)
+   - Department: Assign offering department
+   - Max Uses & Expiry Date
+4. Deliver the code to appointed faculty members to allow them to create their official staff credentials.
+
+### 5.2 Academic Session & Year Server Workflow
 Course Coordinators operate at the departmental and academic calendar level:
 - Navigate to **Academic Sessions** (`/faculty/academic-sessions`).
 - Create or configure academic terms (e.g. `2026 Even Semester`, `2027 Odd Semester`).
