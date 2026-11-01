@@ -44,10 +44,12 @@ Electify is a high-performance, atomic full-stack university elective registrati
 
 | Portal | URL | Primary Users |
 | :--- | :--- | :--- |
-| **Web Application Portal** | `http://localhost:3000/login` (or deployed Vercel domain) | All Students, Tutors, Coordinators, Admins |
-| **Backend REST API** | `http://localhost:4000/api` (or `/api` on Vercel) | Developers, External Integrations |
-| **Swagger Interactive Docs** | `http://localhost:4000/api/docs` | API Reference & SQA Testing |
-| **Live Database Health** | `http://localhost:4000/api/health/db` | Health Monitoring & System Check |
+| **Official Web Application Portal** | [https://electifysrm.vercel.app/login](https://electifysrm.vercel.app/login) | All Students, Tutors, Coordinators, Admins |
+| **Backend REST API** | [https://electifysrm.vercel.app/api](https://electifysrm.vercel.app/api) | Developers, External Integrations |
+| **Swagger Interactive Docs** | [https://electifysrm.vercel.app/api/docs](https://electifysrm.vercel.app/api/docs) | API Reference & SQA Testing |
+| **Live Database Health** | [https://electifysrm.vercel.app/api/health/db](https://electifysrm.vercel.app/api/health/db) | Health Monitoring & System Check |
+| **Local Development Web Portal** | `http://localhost:3000/login` | Local Offline Development & Testing |
+| **Local Backend REST API** | `http://localhost:4000/api` | Local API Development |
 
 ### Default Credentials for Testing / Demonstration
 

@@ -3,214 +3,293 @@ const fs = require("fs");
 const path = require("path");
 
 const baseCss = `
-  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap');
   
   @page {
     size: A4;
-    margin: 20mm 18mm 22mm 18mm;
-    @bottom-right {
-      content: counter(page);
-    }
+    margin: 18mm 16mm 20mm 16mm;
+  }
+
+  * {
+    box-sizing: border-box;
   }
 
   body {
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
     color: #1e293b;
-    line-height: 1.6;
-    font-size: 13.5px;
+    line-height: 1.55;
+    font-size: 13px;
     background-color: #ffffff;
     margin: 0;
     padding: 0;
   }
 
-  .header-banner {
-    border-bottom: 3px solid #1e3a8a;
-    padding-bottom: 14px;
-    margin-bottom: 24px;
+  /* ── Header & Banner ── */
+  .brand-header {
+    border-bottom: 2.5px solid #0f2b5c;
+    padding-bottom: 12px;
+    margin-bottom: 20px;
     display: flex;
     justify-content: space-between;
-    align-items: flex-end;
+    align-items: center;
   }
 
   .university-title {
-    font-size: 19px;
+    font-size: 18px;
     font-weight: 800;
-    color: #1e3a8a;
+    color: #0f2b5c;
     text-transform: uppercase;
-    letter-spacing: 0.5px;
+    letter-spacing: 0.6px;
     margin: 0;
   }
 
-  .sub-title {
-    font-size: 13px;
+  .system-title {
+    font-size: 12.5px;
     font-weight: 600;
-    color: #d97706;
-    margin-top: 3px;
-    margin-bottom: 0;
+    color: #b45309;
+    margin-top: 2px;
   }
 
-  .doc-type-badge {
-    background-color: #eff6ff;
-    border: 1px solid #bfdbfe;
-    color: #1d4ed8;
-    padding: 6px 12px;
-    border-radius: 6px;
+  .badge-portal {
+    background: linear-gradient(135deg, #0f2b5c 0%, #1e40af 100%);
+    color: #ffffff;
+    padding: 6px 14px;
+    border-radius: 20px;
     font-weight: 700;
-    font-size: 12px;
+    font-size: 11.5px;
+    letter-spacing: 0.4px;
     text-transform: uppercase;
-    letter-spacing: 0.5px;
+    box-shadow: 0 2px 4px rgba(15, 43, 92, 0.15);
+  }
+
+  .url-hero-banner {
+    background: #f0f7ff;
+    border: 1px solid #bae6fd;
+    border-radius: 8px;
+    padding: 10px 14px;
+    margin-bottom: 18px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .url-hero-banner strong {
+    color: #0369a1;
+    font-size: 12px;
+  }
+
+  .live-url-pill {
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 600;
+    font-size: 12px;
+    color: #0284c7;
+    background: #ffffff;
+    border: 1px solid #7dd3fc;
+    padding: 3px 10px;
+    border-radius: 6px;
+    text-decoration: none;
   }
 
   h1 {
-    font-size: 22px;
+    font-size: 21px;
     font-weight: 800;
     color: #0f172a;
-    margin-top: 10px;
-    margin-bottom: 16px;
-    padding-bottom: 8px;
-    border-bottom: 1.5px solid #e2e8f0;
+    margin-top: 4px;
+    margin-bottom: 14px;
+    letter-spacing: -0.3px;
   }
 
   h2 {
-    font-size: 17px;
+    font-size: 15.5px;
     font-weight: 700;
-    color: #1e3a8a;
-    margin-top: 24px;
-    margin-bottom: 12px;
-    display: flex;
-    align-items: center;
-    gap: 8px;
+    color: #0f2b5c;
+    margin-top: 22px;
+    margin-bottom: 10px;
+    border-bottom: 1px solid #e2e8f0;
+    padding-bottom: 6px;
   }
 
   h3 {
-    font-size: 14.5px;
+    font-size: 13.5px;
     font-weight: 600;
     color: #334155;
-    margin-top: 18px;
-    margin-bottom: 8px;
+    margin-top: 14px;
+    margin-bottom: 6px;
   }
 
-  p {
-    margin-top: 0;
-    margin-bottom: 10px;
-  }
-
+  /* ── Visual Steps & Cards ── */
   .step-card {
-    background: #f8fafc;
+    background: #ffffff;
     border: 1px solid #e2e8f0;
-    border-left: 4px solid #3b82f6;
+    border-left: 4px solid #0284c7;
     border-radius: 8px;
-    padding: 14px 18px;
-    margin-bottom: 16px;
+    padding: 12px 16px;
+    margin-bottom: 14px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.03);
     page-break-inside: avoid;
   }
 
-  .step-number {
-    display: inline-block;
-    background: #3b82f6;
+  .step-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 8px;
+  }
+
+  .step-num {
+    background: #0284c7;
     color: white;
-    font-weight: 700;
+    font-weight: 800;
     font-size: 11px;
-    padding: 2px 8px;
+    padding: 2px 7px;
     border-radius: 12px;
-    margin-right: 6px;
-    text-transform: uppercase;
   }
 
   .step-title {
-    font-size: 15px;
+    font-size: 14px;
     font-weight: 700;
     color: #0f172a;
-    margin-bottom: 8px;
   }
 
-  .alert {
-    padding: 12px 16px;
-    border-radius: 6px;
-    margin: 14px 0;
-    font-size: 12.5px;
+  /* ── UI Mockup Visuals ── */
+  .ui-mockup-box {
+    background: #f8fafc;
+    border: 1px solid #cbd5e1;
+    border-radius: 8px;
+    padding: 12px;
+    margin: 12px 0;
     page-break-inside: avoid;
   }
 
-  .alert-tip {
-    background-color: #f0fdf4;
-    border-left: 4px solid #16a34a;
-    color: #14532d;
+  .ui-mockup-header {
+    font-size: 11px;
+    font-weight: 700;
+    color: #64748b;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 8px;
+    display: flex;
+    justify-content: space-between;
   }
 
-  .alert-important {
-    background-color: #eff6ff;
-    border-left: 4px solid #2563eb;
-    color: #1e3a8a;
+  .seat-meter-demo {
+    display: flex;
+    gap: 8px;
+    margin-top: 6px;
   }
 
-  .alert-warning {
-    background-color: #fffbeb;
-    border-left: 4px solid #d97706;
-    color: #78350f;
+  .seat-pill {
+    flex: 1;
+    padding: 8px;
+    border-radius: 6px;
+    text-align: center;
+    font-size: 11.5px;
+    font-weight: 600;
   }
 
-  .alert-security {
-    background-color: #fef2f2;
-    border-left: 4px solid #dc2626;
-    color: #7f1d1d;
+  .seat-green { background: #dcfce7; border: 1px solid #86efac; color: #166534; }
+  .seat-amber { background: #fef3c7; border: 1px solid #fcd34d; color: #92400e; }
+  .seat-red { background: #fee2e2; border: 1px solid #fca5a5; color: #991b1b; }
+
+  .receipt-card {
+    background: linear-gradient(135deg, #faf5ff 0%, #f3e8ff 100%);
+    border: 1.5px dashed #a855f7;
+    border-radius: 8px;
+    padding: 12px 16px;
+    text-align: center;
+    margin: 12px 0;
   }
 
+  .receipt-id {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 16px;
+    font-weight: 800;
+    color: #6b21a8;
+    letter-spacing: 1px;
+    margin: 4px 0;
+  }
+
+  /* ── Alerts ── */
+  .alert {
+    padding: 10px 14px;
+    border-radius: 6px;
+    margin: 12px 0;
+    font-size: 12px;
+    page-break-inside: avoid;
+  }
+
+  .alert-tip { background: #f0fdf4; border-left: 3.5px solid #16a34a; color: #14532d; }
+  .alert-important { background: #eff6ff; border-left: 3.5px solid #2563eb; color: #1e3a8a; }
+  .alert-warning { background: #fffbeb; border-left: 3.5px solid #d97706; color: #78350f; }
+  .alert-security { background: #fef2f2; border-left: 3.5px solid #dc2626; color: #7f1d1d; }
+
+  /* ── Tables ── */
   table {
     width: 100%;
     border-collapse: collapse;
-    margin: 14px 0;
-    font-size: 12.5px;
+    margin: 12px 0;
+    font-size: 12px;
     page-break-inside: avoid;
   }
 
   th, td {
-    padding: 9px 12px;
-    text-align: left;
+    padding: 8px 10px;
     border: 1px solid #e2e8f0;
+    text-align: left;
   }
 
   th {
-    background-color: #f1f5f9;
+    background: #f1f5f9;
     color: #0f172a;
     font-weight: 700;
   }
 
   tr:nth-child(even) {
-    background-color: #f8fafc;
+    background: #f8fafc;
   }
 
   code {
     font-family: 'JetBrains Mono', monospace;
-    background-color: #f1f5f9;
+    background: #f1f5f9;
     color: #0f172a;
-    padding: 2px 6px;
+    padding: 1px 5px;
     border-radius: 4px;
-    font-size: 12px;
+    font-size: 11.5px;
     border: 1px solid #e2e8f0;
   }
 
-  ul, ol {
-    margin-top: 0;
-    margin-bottom: 12px;
-    padding-left: 22px;
+  .pipeline {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    padding: 10px 12px;
+    margin: 14px 0;
   }
 
-  li {
-    margin-bottom: 5px;
-  }
-
-  .page-break {
-    page-break-before: always;
-  }
-
-  .footer-note {
-    margin-top: 30px;
-    padding-top: 12px;
-    border-top: 1px solid #e2e8f0;
-    font-size: 11px;
-    color: #64748b;
+  .pipe-step {
     text-align: center;
+    font-size: 11px;
+    font-weight: 700;
+    color: #0f2b5c;
+  }
+
+  .pipe-arrow {
+    color: #94a3b8;
+    font-size: 14px;
+    font-weight: 800;
+  }
+
+  .footer-bar {
+    margin-top: 24px;
+    padding-top: 8px;
+    border-top: 1px solid #e2e8f0;
+    font-size: 10.5px;
+    color: #64748b;
+    display: flex;
+    justify-content: space-between;
   }
 `;
 
@@ -224,17 +303,22 @@ function wrapHtml(title, subtitle, badge, content) {
       <style>${baseCss}</style>
     </head>
     <body>
-      <div class="header-banner">
+      <div class="brand-header">
         <div>
-          <h2 class="university-title">SRM Institute of Science and Technology</h2>
-          <div class="sub-title">${subtitle}</div>
+          <div class="university-title">SRM Institute of Science and Technology</div>
+          <div class="system-title">${subtitle}</div>
         </div>
-        <div class="doc-type-badge">${badge}</div>
+        <div class="badge-portal">${badge}</div>
+      </div>
+      <div class="url-hero-banner">
+        <span><strong>Official Production Portal:</strong> Hosted on Vercel Cloud</span>
+        <span class="live-url-pill">https://electifysrm.vercel.app</span>
       </div>
       <h1>${title}</h1>
       ${content}
-      <div class="footer-note">
-        Electify Transactional Elective Registration System · SRMIST Academic Year 2026 · Confidential & Proprietary
+      <div class="footer-bar">
+        <span>SRMIST Department of Computing Technologies · Electify System</span>
+        <span>Hosted at electifysrm.vercel.app · Verified Clean Build</span>
       </div>
     </body>
     </html>
@@ -243,98 +327,136 @@ function wrapHtml(title, subtitle, badge, content) {
 
 // ── 1. STUDENT MANUAL HTML ──────────────────────────────────────────
 const studentHtml = wrapHtml(
-  "Student User Manual & Registration Guide",
-  "Electify Academic Elective Management System",
+  "Student Elective Registration Guide",
+  "Electify — Smart Elective Registration Platform",
   "Student Edition",
   `
   <div class="alert alert-important">
-    <strong>Welcome to Electify!</strong> This system manages your elective course selections with zero waitlists, live seat counts, and instant tamper-evident receipt generation. Follow this guide to register seamlessly.
+    <strong>Zero-Waitlist Fair Registration:</strong> Electify guarantees a 100% fair course registration system powered by atomic database row-locking. Seats are awarded in real time with instant verified receipt generation.
   </div>
 
-  <h2>1. Access & Account Authentication</h2>
+  <div class="pipeline">
+    <div class="pipe-step">1. Sign In<br/><small style="color:#64748b;">SRM Reg No.</small></div>
+    <div class="pipe-arrow">➔</div>
+    <div class="pipe-step">2. Explore<br/><small style="color:#64748b;">Read Syllabi</small></div>
+    <div class="pipe-arrow">➔</div>
+    <div class="pipe-step">3. Countdown<br/><small style="color:#64748b;">Server Time Sync</small></div>
+    <div class="pipe-arrow">➔</div>
+    <div class="pipe-step">4. Lock Seat<br/><small style="color:#64748b;">1-Click Submit</small></div>
+    <div class="pipe-arrow">➔</div>
+    <div class="pipe-step">5. Receipt PDF<br/><small style="color:#64748b;">ELC-2026 Code</small></div>
+  </div>
+
+  <h2>1. Access & Sign-In</h2>
   <div class="step-card">
-    <div class="step-title"><span class="step-number">Step 1</span> Signing in to the Student Portal</div>
+    <div class="step-header">
+      <span class="step-num">Step 1</span>
+      <span class="step-title">Logging In to the Student Portal</span>
+    </div>
     <ol>
-      <li>Open your web browser (Chrome, Edge, Safari, Firefox) and navigate to: <code>http://localhost:3000/login</code> (or your college Electify URL).</li>
-      <li>Enter your <strong>SRM Register Number</strong> (e.g., <code>RA2411003010001</code>) or official SRM email.</li>
+      <li>Visit the official portal: <a href="https://electifysrm.vercel.app/login" style="color:#0284c7; font-weight:600;">https://electifysrm.vercel.app/login</a>.</li>
+      <li>Enter your <strong>SRM Register Number</strong> (e.g., <code>RA2411003010001</code>) or official SRM student email.</li>
       <li>Enter your password and click <strong>Sign in to Electify</strong>.</li>
     </ol>
   </div>
 
   <div class="alert alert-security">
-    <strong>Security Policy: Single-Session Sentinel</strong><br/>
-    You are allowed only <strong>one active session at a time</strong>. If you log in on another device or a separate browser window, your previous session is immediately revoked. Never share your credentials with classmates.
+    <strong>Security Protection: Single-Session Sentinel</strong><br/>
+    Electify permits strictly <strong>one active session per student</strong>. If you log in on a friend's phone or open another browser tab, your prior session is instantly invalidated. This prevents automated bot-sniping and unauthorized credential sharing.
   </div>
 
-  <h2>2. Exploring Courses Before the Window Opens</h2>
+  <h2>2. Browsing Subjects Before the Window Opens</h2>
   <div class="step-card">
-    <div class="step-title"><span class="step-number">Step 2</span> Subject Explorer & Preview Mode</div>
-    <p>Before the registration countdown expires, you can browse all offered electives:</p>
-    <ol>
-      <li>Click <strong>Subjects</strong> in the navigation sidebar (or visit <code>/dashboard/subjects</code>).</li>
-      <li>Browse course descriptions, syllabi, course credits, and prerequisite criteria.</li>
-      <li>Inspect the total capacity allocated for each subject.</li>
-    </ol>
+    <div class="step-header">
+      <span class="step-num">Step 2</span>
+      <span class="step-title">Subject Explorer & Syllabus Preview Mode</span>
+    </div>
+    <p>Before registration begins, research your course options thoroughly:</p>
+    <ul>
+      <li>Navigate to <strong>Subjects</strong> (<code>/dashboard/subjects</code>) in the left sidebar.</li>
+      <li>Filter by Department, Course Category (Professional Elective, Open Elective), and Credits.</li>
+      <li>Review the complete syllabus outline, course objectives, and prerequisite requirements.</li>
+      <li>View the maximum total seat capacity for each offering.</li>
+    </ul>
   </div>
   <div class="alert alert-tip">
-    <strong>Pro-Tip:</strong> The Subject Explorer is read-only and does not reserve seats. Prepare your top choices in advance so you can submit promptly once the window unlocks.
+    <strong>Preparation Tip:</strong> The Subject Explorer is read-only. Make a list of your 1st, 2nd, and 3rd choices beforehand so you can register within seconds when the timer expires.
   </div>
 
-  <h2>3. Live Registration & Atomic Seat Locking</h2>
+  <h2>3. Live Registration & Live Seat Counters</h2>
   <div class="step-card">
-    <div class="step-title"><span class="step-number">Step 3</span> Synchronized Countdown Clock</div>
-    <p>When an elective registration event is scheduled, navigate to <code>/countdown</code>. The countdown timer is <strong>synchronized directly with the university time server (NTP-drift corrected)</strong>, ensuring absolute fairness across all student devices.</p>
+    <div class="step-header">
+      <span class="step-num">Step 3</span>
+      <span class="step-title">Synchronized Countdown Clock</span>
+    </div>
+    <p>On <code>/countdown</code>, the timer displays the exact time remaining until the registration window unlocks. The clock is <strong>synchronized with the university time server</strong> to ensure all students start simultaneously regardless of device clock differences.</p>
   </div>
 
   <div class="step-card">
-    <div class="step-title"><span class="step-number">Step 4</span> Selecting Your Electives</div>
+    <div class="step-header">
+      <span class="step-num">Step 4</span>
+      <span class="step-title">Selecting Elective Baskets & Atomic Locking</span>
+    </div>
     <ol>
-      <li>When the clock hits zero, click <strong>Enter Registration</strong> (or visit <code>/dashboard/electives</code>).</li>
-      <li>View the available courses under each <strong>Elective Basket</strong>.</li>
-      <li>Observe the live seat indicators:
-        <ul>
-          <li><span style="color:#16a34a; font-weight:700;">GREEN:</span> Seats comfortably available (e.g., 45 / 60 remaining).</li>
-          <li><span style="color:#d97706; font-weight:700;">AMBER:</span> Filling quickly (less than 10% remaining).</li>
-          <li><span style="color:#dc2626; font-weight:700;">RED:</span> Fully booked (0 seats remaining).</li>
-        </ul>
-      </li>
-      <li>Select your preferred course in each required category and click <strong>Submit Registration</strong>.</li>
+      <li>When the clock reaches zero, click <strong>Enter Registration</strong> (or visit <code>/dashboard/electives</code>).</li>
+      <li>Courses are organized into distinct <strong>Elective Baskets</strong> (e.g. <em>Basket A — Advanced AI</em>).</li>
+      <li>Check the live seat availability meters:</li>
     </ol>
-  </div>
 
-  <div class="alert alert-important">
-    <strong>How Atomic Row-Locking Works:</strong><br/>
-    Electify uses PostgreSQL database row-level locking (<code>SELECT ... FOR UPDATE</code>). When you submit, the server checks seat availability and decrements the counter in a single atomic transaction. No overbooking is mathematically possible.
+    <div class="ui-mockup-box">
+      <div class="ui-mockup-header">
+        <span>Real-Time Seat Indicators</span>
+        <span>Live PostgreSQL Sync</span>
+      </div>
+      <div class="seat-meter-demo">
+        <div class="seat-pill seat-green">🟢 45 / 60 Available<br/><small>Seats open</small></div>
+        <div class="seat-pill seat-amber">🟡 4 / 60 Remaining<br/><small>Filling quickly</small></div>
+        <div class="seat-pill seat-red">🔴 0 / 60 Remaining<br/><small>Course full</small></div>
+      </div>
+    </div>
+
+    <ol start="4">
+      <li>Select your preferred subject in each required basket and click <strong>Submit Registration</strong>.</li>
+      <li>The server executes an <strong>atomic row-locking transaction</strong> (<code>SELECT ... FOR UPDATE</code>). If the seat is available, it is permanently awarded to your Register Number.</li>
+    </ol>
   </div>
 
   <h2>4. Confirmation & Official PDF Receipt</h2>
   <div class="step-card">
-    <div class="step-title"><span class="step-number">Step 5</span> Downloading Your Official Receipt</div>
-    <ol>
-      <li>Upon submission, you are immediately routed to <code>/dashboard/success</code>.</li>
-      <li>Your unique <strong>Official Receipt ID</strong> will be displayed in the format:
-        <br/><code>ELC-&lt;YEAR&gt;-&lt;ODD|EVEN&gt;-&lt;SEQUENCE_NUMBER&gt;</code> (e.g. <code>ELC-2026-EVEN-00421</code>).</li>
-      <li>Click <strong>Download PDF Receipt</strong> to save your official verification document. Retain this PDF for your academic records and tutor verification.</li>
-    </ol>
+    <div class="step-header">
+      <span class="step-num">Step 5</span>
+      <span class="step-title">Instant Official Receipt & Download</span>
+    </div>
+    <p>Upon successful submission, you are routed directly to <code>/dashboard/success</code> with your official registration confirmation:</p>
+    
+    <div class="receipt-card">
+      <div style="font-size:11px; font-weight:700; color:#7e22ce; text-transform:uppercase;">Official Elective Receipt ID</div>
+      <div class="receipt-id">ELC-2026-EVEN-00421</div>
+      <div style="font-size:11px; color:#581c87;">Issued by SRM Institute of Science and Technology · Tamper-Evident Record</div>
+    </div>
+
+    <p style="text-align:center;">
+      Click <strong>Download PDF Receipt</strong> to save your encrypted verification document for verification by your Class Tutor.
+    </p>
   </div>
 
-  <h2>5. Troubleshooting & Frequently Asked Questions</h2>
+  <h2>5. Student Troubleshooting Matrix</h2>
   <table>
     <tr>
-      <th style="width: 35%;">Issue / Question</th>
-      <th>Solution / Protocol</th>
+      <th style="width: 35%;">Issue Faced</th>
+      <th>Instant Resolution</th>
     </tr>
     <tr>
       <td><strong>Forgot Password / Locked Out</strong></td>
-      <td>Students cannot self-reset passwords to prevent account takeover. Contact your <strong>Class Tutor</strong> directly; they will verify your identity and authorize a 15-minute PIN reset.</td>
+      <td>Students cannot self-reset passwords online. Approach your <strong>Class Tutor</strong> in person. They will verify your identity and generate a 15-minute PIN reset token.</td>
     </tr>
     <tr>
-      <td><strong>Course filled while selecting</strong></td>
-      <td>If another student claimed the last seat a millisecond before you, the system notifies you instantly. Choose an alternative elective in that basket and submit immediately.</td>
+      <td><strong>Selected course became full</strong></td>
+      <td>Another student confirmed the final seat milliseconds earlier. Choose an alternative elective in that basket and click Submit immediately.</td>
     </tr>
     <tr>
-      <td><strong>Can I modify my choice?</strong></td>
-      <td>Modifications are allowed only if the Course Coordinator enabled <em>"Allow Modifications"</em> and the registration window has not reached its deadline.</td>
+      <td><strong>Can I change my choices?</strong></td>
+      <td>If the Course Coordinator enabled <em>"Allow Modifications"</em> and the window is still open, visit <code>/dashboard/electives</code> to update and receive a re-stamped receipt.</td>
     </tr>
   </table>
   `
@@ -342,69 +464,96 @@ const studentHtml = wrapHtml(
 
 // ── 2. CLASS TUTOR MANUAL HTML ──────────────────────────────────────
 const tutorHtml = wrapHtml(
-  "Class Tutor User Manual & Cohort Administration",
-  "Electify Academic Elective Management System",
+  "Class Tutor Cohort Supervision Manual",
+  "Electify — Class Tutor Administration Suite",
   "Class Tutor Edition",
   `
   <div class="alert alert-important">
-    <strong>Class Tutor Responsibilities:</strong> As a Class Tutor, you monitor student enrollment progress, supervise assigned section rosters, authorize student password/PIN resets, and generate attendance reports for Department leadership.
+    <strong>Class Tutor Responsibilities:</strong> Supervise assigned class sections, monitor real-time student registration progress, authorize in-person student password resets, and export class rosters for Department records.
   </div>
 
-  <h2>1. Staff Login & Academic Workspace Setup</h2>
+  <div class="pipeline">
+    <div class="pipe-step">1. Login<br/><small style="color:#64748b;">Faculty Credentials</small></div>
+    <div class="pipe-arrow">➔</div>
+    <div class="pipe-step">2. Pick Session<br/><small style="color:#64748b;">Academic Term</small></div>
+    <div class="pipe-arrow">➔</div>
+    <div class="pipe-step">3. Switch Class<br/><small style="color:#64748b;">Multi-Section</small></div>
+    <div class="pipe-arrow">➔</div>
+    <div class="pipe-step">4. Track Turnout<br/><small style="color:#64748b;">Unregistered Filter</small></div>
+    <div class="pipe-arrow">➔</div>
+    <div class="pipe-step">5. Export PDF<br/><small style="color:#64748b;">HOD Roster</small></div>
+  </div>
+
+  <h2>1. Faculty Login & Workspace Selection</h2>
   <div class="step-card">
-    <div class="step-title"><span class="step-number">Step 1</span> Authenticating to the Faculty Portal</div>
+    <div class="step-header">
+      <span class="step-num">Step 1</span>
+      <span class="step-title">Accessing the Faculty Portal</span>
+    </div>
     <ol>
-      <li>Navigate to <code>http://localhost:3000/login</code>.</li>
+      <li>Visit: <a href="https://electifysrm.vercel.app/login" style="color:#0284c7; font-weight:600;">https://electifysrm.vercel.app/login</a>.</li>
       <li>Sign in using your faculty email (e.g., <code>angelb1@srmist.edu.in</code>) and password: <code>Electify@2026</code>.</li>
-      <li>Select your active <strong>Academic Session</strong> (e.g. <code>2025–2026 Even Semester</code>) on <code>/faculty/session-select</code>.</li>
+      <li>On <code>/faculty/session-select</code>, choose your active academic term (e.g. <em>2025–2026 Even Semester</em>).</li>
     </ol>
   </div>
 
-  <h2>2. Section Switching & Multi-Section Supervision</h2>
+  <h2>2. Section Switching & Multi-Section Oversight</h2>
   <div class="step-card">
-    <div class="step-title"><span class="step-number">Step 2</span> Managing Multiple Assigned Sections</div>
-    <p>Electify allows tutors to oversee multiple sections across programmes:</p>
+    <div class="step-header">
+      <span class="step-num">Step 2</span>
+      <span class="step-title">Managing Multiple Assigned Classes</span>
+    </div>
+    <p>Electify supports tutors managing multiple classes across programmes:</p>
     <ul>
-      <li><strong>Active Section Switcher:</strong> Look at the top bar navigation. Click the section badge to switch active views (e.g., between <em>Section A</em> and <em>Section B</em>).</li>
-      <li><strong>Claiming New Sections:</strong> Navigate to <strong>Assign Sections</strong> (<code>/faculty/assign-sections</code>), choose your newly allocated class section from the university catalogue, and click <strong>Claim Section</strong>.</li>
+      <li><strong>Active Section Switcher:</strong> Located at the top right of the faculty header. Click the pill to toggle between assigned classes (e.g., <code>CSE-AIML Section A</code> ↔ <code>CSE-AIML Section B</code>).</li>
+      <li><strong>Claiming New Sections:</strong> If you are newly assigned to a class, open <strong>Assign Sections</strong> (<code>/faculty/assign-sections</code>), choose your section from the university catalogue, and click <strong>Claim Section</strong>.</li>
     </ul>
   </div>
 
-  <h2>3. Live Section Roster & Student Tracking</h2>
+  <h2>3. Live Class Roster & Student Tracking</h2>
   <div class="step-card">
-    <div class="step-title"><span class="step-number">Step 3</span> Reviewing Student Enrollment Status</div>
+    <div class="step-header">
+      <span class="step-num">Step 3</span>
+      <span class="step-title">Reviewing Submission Status in Real Time</span>
+    </div>
     <ol>
       <li>Navigate to <strong>Section Roster</strong> (<code>/faculty/section</code>).</li>
-      <li>The roster displays all students enrolled in your active section with their:
+      <li>The roster displays all students in your active section with their:
         <ul>
-          <li>SRM Register Number and Full Name</li>
-          <li>Registration Status: <span style="color:#16a34a; font-weight:700;">Confirmed</span>, <span style="color:#d97706; font-weight:700;">In Progress</span>, or <span style="color:#dc2626; font-weight:700;">Unregistered</span></li>
-          <li>Selected Elective Course Code and submission timestamp</li>
+          <li>Register Number, Full Name, and SRM Email</li>
+          <li>Registration Badge: <span style="color:#16a34a; font-weight:700;">CONFIRMED</span> (Green), <span style="color:#d97706; font-weight:700;">IN PROGRESS</span> (Amber), or <span style="color:#dc2626; font-weight:700;">UNREGISTERED</span> (Red)</li>
+          <li>Enrolled Elective Course Title and exact submission timestamp</li>
         </ul>
       </li>
-      <li>Click the <strong>"Unregistered Only"</strong> filter toggle to isolate students who have not yet submitted their choices before the window closes.</li>
+      <li>Click the <strong>"Unregistered Only"</strong> filter switch to immediately generate a call-out list of students who have not yet submitted choices before the deadline.</li>
     </ol>
   </div>
 
   <h2>4. Authorizing Student Password & PIN Resets</h2>
   <div class="step-card">
-    <div class="step-title"><span class="step-number">Step 4</span> In-Person PIN Reset Authorization</div>
-    <p>To eliminate unauthorized credential compromise during competitive registration, students cannot self-service reset passwords online. Tutors authorize resets directly:</p>
+    <div class="step-header">
+      <span class="step-num">Step 4</span>
+      <span class="step-title">In-Person Verification & PIN Reset Authorization</span>
+    </div>
+    <p>To eliminate credential theft during competitive registration windows, students cannot self-reset passwords online. Tutors authorize resets directly:</p>
     <ol>
-      <li>Navigate to <strong>Students</strong> (<code>/faculty/students</code>) in the faculty sidebar.</li>
-      <li>Search for the student by their Register Number (e.g., <code>RA2411...</code>).</li>
-      <li>Verify the student's physical identity in the classroom.</li>
-      <li>Click <strong>Authorize PIN Reset</strong>. The system generates a secure 15-minute token allowing the student to sign in and set a new password.</li>
+      <li>Open <strong>Students</strong> (<code>/faculty/students</code>) in the faculty sidebar.</li>
+      <li>Search for the student by Register Number or Name.</li>
+      <li>Verify the student's physical identity in your department.</li>
+      <li>Click <strong>Authorize PIN Reset</strong>. The system generates a temporary 15-minute token allowing the student to sign in and set a new password.</li>
     </ol>
   </div>
 
-  <h2>5. Exporting Official Section Reports</h2>
+  <h2>5. Exporting Verified Class Reports</h2>
   <div class="step-card">
-    <div class="step-title"><span class="step-number">Step 5</span> Generating Class Attendance & Allocation Lists</div>
+    <div class="step-header">
+      <span class="step-num">Step 5</span>
+      <span class="step-title">Generating Official Section Rosters</span>
+    </div>
     <ol>
       <li>Navigate to <strong>Tutor Reports</strong> (<code>/faculty/tutor-reports</code>).</li>
-      <li>Review the summary analytics: class turnout percentage and course distribution.</li>
-      <li>Click <strong>Export Class List (PDF)</strong> to generate an official verified PDF report containing student signatures, course allotments, and timestamps for submission to the HOD.</li>
+      <li>Review section statistics: overall turnout percentage and elective seat distribution.</li>
+      <li>Click <strong>Export Class List (PDF)</strong> to download an official formatted report with student names, register numbers, course allocations, and timestamps ready for Head of Department sign-off.</li>
     </ol>
   </div>
   `
@@ -412,168 +561,187 @@ const tutorHtml = wrapHtml(
 
 // ── 3. COURSE COORDINATOR MANUAL HTML ────────────────────────────────
 const coordHtml = wrapHtml(
-  "Course Coordinator User Manual & System Administration",
-  "Electify Academic Elective Management System",
+  "Course Coordinator Master Manual",
+  "Electify — Academic Program & Event Management",
   "Course Coordinator Edition",
   `
   <div class="alert alert-important">
-    <strong>Course Coordinator Responsibilities:</strong> Coordinators manage elective offerings, define course capacities and baskets, schedule registration windows, monitor real-time event surveillance, and export master university audit reports.
+    <strong>Course Coordinator Responsibilities:</strong> Define elective offerings, set maximum seat capacities and baskets, schedule registration windows with automated closures, supervise live event surveillance, and export master reports.
+  </div>
+
+  <div class="pipeline">
+    <div class="pipe-step">1. Year Server<br/><small style="color:#64748b;">Isolated Term</small></div>
+    <div class="pipe-arrow">➔</div>
+    <div class="pipe-step">2. Electives<br/><small style="color:#64748b;">Baskets & Caps</small></div>
+    <div class="pipe-arrow">➔</div>
+    <div class="pipe-step">3. Schedule<br/><small style="color:#64748b;">Window Timers</small></div>
+    <div class="pipe-arrow">➔</div>
+    <div class="pipe-step">4. Live Monitor<br/><small style="color:#64748b;">Realtime Telemetry</small></div>
+    <div class="pipe-arrow">➔</div>
+    <div class="pipe-step">5. Audit Replay<br/><small style="color:#64748b;">COE Master Export</small></div>
   </div>
 
   <h2>1. Coordinator Login & Year Server Management</h2>
   <div class="step-card">
-    <div class="step-title"><span class="step-number">Step 1</span> Accessing Academic Year Isolation</div>
+    <div class="step-header">
+      <span class="step-num">Step 1</span>
+      <span class="step-title">Accessing the Coordinator Suite</span>
+    </div>
     <ol>
-      <li>Sign in at <code>http://localhost:3000/login</code> with your coordinator email (e.g., <code>sabenabanu@srmist.edu.in</code>) and password: <code>Electify@2026</code>.</li>
-      <li>Navigate to <strong>Academic Sessions</strong> (<code>/faculty/academic-sessions</code>).</li>
-      <li>Electify operates on an <strong>Academic Year Server Model</strong>: registrations, cohorts, and metrics for 2026 are completely isolated from 2025 records.</li>
+      <li>Sign in at: <a href="https://electifysrm.vercel.app/login" style="color:#0284c7; font-weight:600;">https://electifysrm.vercel.app/login</a>.</li>
+      <li>Credentials: <code>sabenabanu@srmist.edu.in</code> / <code>Electify@2026</code>.</li>
+      <li>Navigate to <strong>Academic Sessions</strong> (<code>/faculty/academic-sessions</code>). Electify isolates database entities by academic year, guaranteeing historical data integrity.</li>
     </ol>
   </div>
 
-  <h2>2. Electives Catalogue & Seat Basket Configuration</h2>
+  <h2>2. Electives Catalogue & Basket Allocation</h2>
   <div class="step-card">
-    <div class="step-title"><span class="step-number">Step 2</span> Creating Electives & Setting Capacities</div>
+    <div class="step-header">
+      <span class="step-num">Step 2</span>
+      <span class="step-title">Creating Electives and Seat Caps</span>
+    </div>
     <ol>
-      <li>Navigate to <strong>Electives Management</strong> (<code>/faculty/electives</code>).</li>
+      <li>Open <strong>Electives Management</strong> (<code>/faculty/electives</code>).</li>
       <li>Click <strong>Create New Elective</strong>:
         <ul>
-          <li>Enter Subject Code (e.g. <code>21CSE301T</code>) and Full Course Name.</li>
-          <li>Assign Offering Department and Credit weightage.</li>
-          <li>Set <strong>Maximum Seat Capacity</strong> (e.g., 60 seats).</li>
+          <li>Subject Code (e.g. <code>21CSE301T</code>) and Course Title.</li>
+          <li>Department, Credits, and Syllabus overview.</li>
+          <li><strong>Maximum Seat Capacity:</strong> Set the exact hard cap (e.g. 60 seats).</li>
         </ul>
       </li>
-      <li>Group electives into <strong>Baskets</strong> (e.g. <em>Professional Elective III</em>). Students must choose exactly one subject per basket.</li>
+      <li>Organize electives into <strong>Baskets</strong> (e.g., <em>Professional Elective III</em>). Students will be required to pick exactly one course per basket.</li>
     </ol>
   </div>
 
-  <h2>3. Scheduling Registration Windows & Automation</h2>
+  <h2>3. Window Scheduling & Auto-Close Automation</h2>
   <div class="step-card">
-    <div class="step-title"><span class="step-number">Step 3</span> Window Scheduler & Auto-Close</div>
+    <div class="step-header">
+      <span class="step-num">Step 3</span>
+      <span class="step-title">Scheduling Start, End, and Rules</span>
+    </div>
     <ol>
       <li>Navigate to <strong>Window Control</strong> (<code>/faculty/window</code>).</li>
-      <li>Configure:
-        <ul>
-          <li><strong>Opens At:</strong> Precise start date and time.</li>
-          <li><strong>Closes At:</strong> Strict submission deadline.</li>
-          <li><strong>Auto-Close (Recommended):</strong> Automatically terminates submissions at the deadline without manual supervisor action.</li>
-          <li><strong>Allow Editing:</strong> Toggle whether students can modify choices while the window is live.</li>
-        </ul>
-      </li>
+      <li>Set <strong>Opening Date & Time</strong> and <strong>Closing Date & Time</strong>.</li>
+      <li>Enable <strong>Auto-Close</strong>: The registration window automatically locks when the deadline passes with zero manual intervention required.</li>
+      <li>Toggle <strong>Allow Modifications</strong>: Controls whether students can change choices while the window remains open.</li>
       <li>Click <strong>Publish & Schedule Event</strong>.</li>
     </ol>
   </div>
 
-  <h2>4. Live Event Surveillance Monitor</h2>
+  <h2>4. Live Event Surveillance Telemetry</h2>
   <div class="step-card">
-    <div class="step-title"><span class="step-number">Step 4</span> Real-time Event Telemetry</div>
-    <p>During a live registration event, open <code>/faculty/monitor</code> to observe live telemetry:</p>
+    <div class="step-header">
+      <span class="step-num">Step 4</span>
+      <span class="step-title">Live Real-Time Monitoring</span>
+    </div>
+    <p>During a live registration event, navigate to <strong>Live Monitor</strong> (<code>/faculty/monitor</code>):</p>
     <ul>
-      <li><strong>Online Student Heartbeats:</strong> Real-time count of active students inside the portal.</li>
-      <li><strong>Real-time Seat Gauges:</strong> Dynamic visual bars displaying seat depletion rates per subject.</li>
-      <li><strong>Submission Velocity:</strong> Registrations processed per minute.</li>
-      <li><strong>Emergency Pause:</strong> If an unforeseen issue arises, click <em>Pause Window</em> to freeze all transactions safely without losing existing allocations.</li>
+      <li><strong>Active Student Heartbeats:</strong> Real-time count of students actively browsing in the portal.</li>
+      <li><strong>Seat Depletion Meters:</strong> Visual progress gauges showing seats filled per course in real time.</li>
+      <li><strong>Submission Velocity:</strong> Registration transactions completed per second.</li>
+      <li><strong>Emergency Pause:</strong> In case of an unforeseen academic announcement, click <em>Pause Window</em> to freeze submissions safely without dropping existing allocations.</li>
     </ul>
   </div>
 
-  <h2>5. Registration Replay & Departmental Master Reports</h2>
+  <h2>5. Registration Replay & Master Examination Export</h2>
   <div class="step-card">
-    <div class="step-title"><span class="step-number">Step 5</span> Audit Replay & Reports</div>
+    <div class="step-header">
+      <span class="step-num">Step 5</span>
+      <span class="step-title">Audit Timeline & University Master Reports</span>
+    </div>
     <ol>
-      <li><strong>Registration Replay (<code>/faculty/replay</code>):</strong> Scrub through an interactive timeline to audit every submission down to the millisecond, verifying first-come-first-served fairness.</li>
-      <li><strong>Master Departmental Reports (<code>/faculty/reports</code>):</strong> Export comprehensive Excel and PDF course rosters formatted for the Controller of Examinations (COE).</li>
+      <li><strong>Registration Replay (<code>/faculty/replay</code>):</strong> Drag the interactive timeline slider to replay the exact order of registrations down to the millisecond, verifying first-come-first-served transparency.</li>
+      <li><strong>Master Departmental Reports (<code>/faculty/reports</code>):</strong> Export complete consolidated Excel and PDF reports ready for the Controller of Examinations (COE).</li>
     </ol>
   </div>
   `
 );
 
-// ── 4. MASTER COMPREHENSIVE MANUAL HTML ─────────────────────────────
+// ── 4. MASTER MANUAL HTML ───────────────────────────────────────────
 const masterHtml = wrapHtml(
-  "Electify Master Operations Manual & Technical Specification",
+  "Institutional Operations & Architecture Manual",
   "SRM Institute of Science and Technology · Academic Year 2026",
   "Institutional Master Edition",
   `
   <div class="alert alert-important">
-    <strong>Institutional Master Manual:</strong> Comprehensive operational, functional, and technical reference for SRMIST faculty, coordinators, system administrators, and university evaluation panels.
+    <strong>Institutional Master Manual:</strong> Comprehensive architectural specification, security protocols, and operational workflows for SRMIST administrators, academic evaluators, and system developers.
   </div>
 
-  <h2>1. System Architecture & Technical Safeguards</h2>
+  <h2>1. Cloud Production Architecture</h2>
   <table>
     <tr>
-      <th style="width: 28%;">Layer</th>
-      <th style="width: 32%;">Technology</th>
-      <th>Architectural Responsibility</th>
+      <th style="width: 25%;">Component</th>
+      <th style="width: 35%;">Technology</th>
+      <th>Production Endpoint / Role</th>
     </tr>
     <tr>
-      <td><strong>Frontend</strong></td>
+      <td><strong>Frontend Portal</strong></td>
       <td>Next.js 16 (React 19, Tailwind v4)</td>
-      <td>Server Actions, NTP clock sync, responsive UI, client-side seat telemetry.</td>
+      <td><code>https://electifysrm.vercel.app</code></td>
     </tr>
     <tr>
       <td><strong>Backend REST API</strong></td>
       <td>NestJS 11 (Express, Swagger UI)</td>
-      <td>Role-based guards, JWT authentication, OpenAPI endpoints, health monitoring.</td>
+      <td><code>https://electifysrm.vercel.app/api</code> (Docs: <code>/api/docs</code>)</td>
     </tr>
     <tr>
       <td><strong>Database & ORM</strong></td>
       <td>PostgreSQL 16, Drizzle ORM</td>
-      <td>Atomic row-locking (<code>SELECT ... FOR UPDATE</code>), 27 schema tables, auto-healing.</td>
+      <td>Supabase Transaction Pooler (<code>aws-1-eu-central-1</code>)</td>
     </tr>
     <tr>
-      <td><strong>Cloud Infrastructure</strong></td>
-      <td>Supabase & Vercel Services</td>
-      <td>SSL-encrypted transaction pooler, multi-service edge routing, private service bindings.</td>
+      <td><strong>Multi-Service Routing</strong></td>
+      <td>Vercel Services & Service Bindings</td>
+      <td>Internal binding: <code>NESTJS_API_URL</code></td>
     </tr>
   </table>
 
-  <h2>2. University Role Credentials & Access Levels</h2>
+  <h2>2. University Role Credentials Summary</h2>
   <table>
     <tr>
       <th>Role</th>
-      <th>Official Identifier</th>
+      <th>Identifier</th>
       <th>Default Password</th>
-      <th>Access Scope</th>
+      <th>Authority Scope</th>
     </tr>
     <tr>
       <td><strong>System Admin</strong></td>
       <td><code>srmelectify@gmail.com</code></td>
       <td><code>Electify@2026</code></td>
-      <td>Root immutable control, audit trail, maintenance mode, system settings.</td>
+      <td>Superuser, Maintenance Mode, Audit Logs.</td>
     </tr>
     <tr>
       <td><strong>Course Coordinator</strong></td>
       <td><code>sabenabanu@srmist.edu.in</code></td>
       <td><code>Electify@2026</code></td>
-      <td>Electives creation, capacity limits, window scheduling, surveillance, master reports.</td>
+      <td>Electives, Capacities, Windows, Surveillance, Replay.</td>
     </tr>
     <tr>
       <td><strong>Class Tutor</strong></td>
       <td><code>angelb1@srmist.edu.in</code></td>
       <td><code>Electify@2026</code></td>
-      <td>Section roster tracking, student PIN reset authorization, attendance PDF export.</td>
+      <td>Class Rosters, PIN Reset Authorization, Attendance PDF.</td>
     </tr>
     <tr>
       <td><strong>Student</strong></td>
       <td>SRM Register Number</td>
       <td>Student Configured</td>
-      <td>Subject explorer preview, live seat reservation, official PDF receipt.</td>
+      <td>Subject Explorer, Seat Claim, Receipt Download.</td>
     </tr>
   </table>
 
-  <h2>3. Complete End-to-End Workflow Diagram</h2>
-  <div class="step-card">
-    <ol>
-      <li><strong>Configuration Phase:</strong> Course Coordinator creates electives on <code>/faculty/electives</code>, assigns seat caps, and schedules the window on <code>/faculty/window</code>.</li>
-      <li><strong>Preview Phase:</strong> Students log in to <code>/dashboard/subjects</code> to inspect course syllabi and prerequisites before the countdown ends.</li>
-      <li><strong>Live Registration Phase:</strong> Window unlocks. Students select electives on <code>/dashboard/electives</code>. The database locks rows atomically and records seat reservations.</li>
-      <li><strong>Receipt Phase:</strong> Students receive unique numbered receipt <code>ELC-2026-EVEN-XXXXX</code> and download their official tamper-evident PDF.</li>
-      <li><strong>Supervision & Auditing:</strong> Tutors track class turnout on <code>/faculty/section</code>; coordinators replay the submission timeline on <code>/faculty/replay</code> and export departmental rosters.</li>
-    </ol>
-  </div>
+  <h2>3. Technical Concurrency & Security Safeguards</h2>
+  <ul>
+    <li><strong>PostgreSQL Row-Locking Concurrency:</strong> Seat reservations use <code>SELECT ... FOR UPDATE</code> within ACID transactions. Zero waitlists and zero overbooking.</li>
+    <li><strong>Single-Session Sentinel:</strong> Prevents multi-device sniping by invalidating prior JWT signatures immediately upon new sign-in.</li>
+    <li><strong>NTP Clock Synchronization:</strong> Client countdown timers are synchronized to server NTP time to eliminate client-side device tampering.</li>
+    <li><strong>Tamper-Evident Receipts:</strong> Formatted as <code>ELC-2026-EVEN-XXXXX</code> with cryptographic verification signatures.</li>
+  </ul>
 
-  <h2>4. SQA Test Verification & Zero-Defect Report</h2>
+  <h2>4. Automated SQA Verification (Zero-Defect Status)</h2>
   <div class="alert alert-tip">
-    <strong>SQA Test Suite Status: 20 Passed / 0 Failed (100% Pass Rate)</strong><br/>
-    The automated verification suite (<code>npm run test:sqa</code>) verifies database connectivity, 27 schema tables, bcrypt cost-12 hashing, NestJS RBAC security guards, runtime proxying, and unauthenticated route protections.
+    <strong>Automated Quality Assurance: 20 Tests Passed / 0 Failed (100% Pass Rate)</strong><br/>
+    Execute anytime with <code>npm run test:sqa</code> to verify Supabase connectivity, 27 schema tables, role guards, proxy routing, and REST endpoints.
   </div>
   `
 );
@@ -616,7 +784,6 @@ async function generateAllPdfs() {
       }
     });
 
-    // Also copy to brain artifact directory so it's readily downloadable
     fs.copyFileSync(targetFile, brainFile);
 
     const stats = fs.statSync(targetFile);
@@ -625,7 +792,7 @@ async function generateAllPdfs() {
   }
 
   await browser.close();
-  console.log("\nAll 4 User Manual PDFs generated successfully!");
+  console.log("\nAll 4 Premium User Manual PDFs generated successfully!");
 }
 
 generateAllPdfs().catch(err => {
