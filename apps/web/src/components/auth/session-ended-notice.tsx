@@ -8,9 +8,11 @@ export function SessionEndedNotice() {
   const params = useSearchParams()
   if (params.get("expired") !== "1") return null
   return (
-    <p role="status" className="mb-4 flex items-start gap-2 rounded-control border border-border bg-surface p-3 text-sm text-fg-muted">
-      <Info className="mt-0.5 size-4 shrink-0" aria-hidden />
-      <span>Your session ended. This happens when you sign in on another device or your account changes. Sign in again to continue.</span>
-    </p>
+    <div role="status" className="mb-4 flex items-start gap-2.5 rounded-control border border-amber-500/30 bg-amber-500/10 p-3.5 text-sm text-amber-200">
+      <Info className="mt-0.5 size-4 shrink-0 text-amber-400" aria-hidden />
+      <span>
+        <strong>Single device policy:</strong> Your session was signed out because your account was logged in on another device (laptop or phone). Students are allowed only <strong>1 active device</strong> at a time.
+      </span>
+    </div>
   )
 }

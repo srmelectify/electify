@@ -133,8 +133,9 @@ Once you have created your account:
 2. Enter your **SRM Register Number** (e.g. `RA2411003010001`) or official SRM email.
 3. Enter your password and click **Sign in to Electify**.
 
-> [!NOTE]
-> Electify enforces a **Strict Single Active Session** security policy for students. If a student logs in on a second device or browser tab, the previous session is immediately revoked to prevent unauthorized access and ticket sniping. (Faculty and Administrators are permitted up to 3 active devices simultaneously).
+> [!IMPORTANT]
+> **Strict Single-Device Policy (Laptop OR Phone Only)**:
+> Students are strictly restricted to **one active device at a time**. You can sign in using either your laptop OR your mobile phone, but **never both simultaneously**. Signing in on a second device or new tab immediately invalidates and disconnects the previous device with zero latency, preventing seat-sniping and unauthorized proxy logins. (Faculty and Administrators are permitted up to 3 active devices simultaneously).
 
 ### 3.3 Student Dashboard Overview
 Upon logging in, your personalized dashboard displays:

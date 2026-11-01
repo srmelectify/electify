@@ -116,10 +116,17 @@ assert.strictEqual(isSessionValid(studentDbSession, sDev1, "STUDENT"), false, "S
 assert.strictEqual(isSessionValid(studentDbSession, sDev2, "STUDENT"), true, "Student Phone is active");
 console.log("[✓ PASS] Student Phone logged in -> Laptop revoked immediately (Strictly single-session enforced)");
 
+// Student logs back into Laptop -> Phone is IMMEDIATELY REVOKED
+const sDev3 = "student-laptop-003";
+studentDbSession = simulateLogin(studentDbSession, sDev3, "STUDENT");
+assert.strictEqual(isSessionValid(studentDbSession, sDev2, "STUDENT"), false, "Student Phone MUST be revoked immediately when Laptop logs in again");
+assert.strictEqual(isSessionValid(studentDbSession, sDev3, "STUDENT"), true, "Student Laptop is active again");
+console.log("[✓ PASS] Student Laptop logged in again -> Phone revoked immediately (Only 1 device at all times)");
+
 // Student logs out
-studentDbSession = simulateLogout(studentDbSession, sDev2, "STUDENT");
+studentDbSession = simulateLogout(studentDbSession, sDev3, "STUDENT");
 assert.strictEqual(studentDbSession, null, "Student currentSessionId must be null upon logout");
-assert.strictEqual(isSessionValid(studentDbSession, sDev2, "STUDENT"), false, "Student session revoked after logout");
+assert.strictEqual(isSessionValid(studentDbSession, sDev3, "STUDENT"), false, "Student session revoked after logout");
 console.log("[✓ PASS] Student logout -> Session completely cleared");
 
 console.log("\n==================================================");

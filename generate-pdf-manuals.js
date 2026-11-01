@@ -468,8 +468,8 @@ const studentHtml = wrapHtml(
   </div>
 
   <div class="alert alert-security">
-    <strong>Single-Session Sentinel Active:</strong><br/>
-    You are allowed only <strong>one active session at a time</strong>. Opening a new tab on another phone or browser invalidates previous sessions immediately to prevent ticket-botting and account tampering.
+    <strong>Strict Single-Device Policy (Laptop OR Phone Only):</strong><br/>
+    Students are strictly restricted to <strong>one active device at a time</strong>. You may log in from either your laptop OR your phone, but never both simultaneously. Signing in on a second device or new browser window immediately revokes and signs out your earlier device to ensure fair, anti-tamper elective registration.
   </div>
 
   <h2>3. Exploring Electives & Live Registration</h2>

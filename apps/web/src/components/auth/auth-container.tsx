@@ -448,7 +448,7 @@ function StudentForm({
       </Button>
 
       <p className="text-[11px] text-fg-subtle text-center">
-        Single session enforced. Multiple simultaneous logins are strictly restricted.
+        🔒 Strict single-device policy: Log in on laptop OR phone only. Signing in on another device immediately logs out your previous device.
       </p>
 
       <div className="pt-2 text-center text-sm text-fg-muted">
