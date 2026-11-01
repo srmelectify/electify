@@ -1,3 +1,5 @@
+import * as dotenv from "dotenv";
+dotenv.config({ path: [".env.local", ".env", "../../.env.local", "../../.env"] });
 import { defineConfig } from "drizzle-kit";
 
 const url = process.env.DIRECT_URL || process.env.DATABASE_URL || "";

@@ -12,6 +12,11 @@ export async function bootstrap() {
 
   const app = await NestFactory.create(AppModule);
 
+  const httpAdapter = app.getHttpAdapter().getInstance();
+  httpAdapter.get("/", (_req: any, res: any) => {
+    res.redirect("/api/docs");
+  });
+
   app.setGlobalPrefix("api");
   app.enableCors({
     origin: true,

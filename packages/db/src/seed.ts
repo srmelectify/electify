@@ -5,7 +5,8 @@
  * Run with: npx tsx src/lib/db/seed.ts
  */
 
-import "dotenv/config";
+import * as dotenv from "dotenv";
+dotenv.config({ path: [".env.local", ".env", "../../.env.local", "../../.env"] });
 import { drizzle } from "drizzle-orm/node-postgres";
 import { Pool } from "pg";
 import * as bcrypt from "bcryptjs";
@@ -77,7 +78,14 @@ async function seed() {
     throw new Error("DIRECT_URL or DATABASE_URL must be set");
   }
 
-  const pool = new Pool({ connectionString });
+  const isLocal =
+    connectionString.includes("localhost") ||
+    connectionString.includes("127.0.0.1");
+
+  const pool = new Pool({
+    connectionString,
+    ssl: isLocal ? false : { rejectUnauthorized: false },
+  });
   const db = drizzle(pool, { schema });
 
   console.log("🌱 Seeding Electify database (Full SRM Structure)...\n");
