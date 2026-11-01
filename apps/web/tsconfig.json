@@ -25,6 +25,12 @@
     "paths": {
       "@/*": [
         "./src/*"
+      ],
+      "@electify/db": [
+        "../../packages/db/src/index.ts"
+      ],
+      "@electify/db/*": [
+        "../../packages/db/src/*"
       ]
     }
   },
