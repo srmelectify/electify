@@ -3,6 +3,34 @@ import { ApiTags, ApiOperation, ApiResponse } from "@nestjs/swagger";
 import { DB_POOL } from "../database/database.module";
 import { Pool } from "pg";
 
+@ApiTags("API Root")
+@Controller()
+export class RootController {
+  @Get()
+  @ApiOperation({ summary: "API Index & Service Overview" })
+  @ApiResponse({ status: 200, description: "API root overview" })
+  getRoot() {
+    return {
+      name: "Electify Backend REST API",
+      status: "online",
+      version: "0.1.0",
+      documentation: "/api/docs",
+      endpoints: {
+        swagger: "/api/docs",
+        health: "/api/health",
+        healthDb: "/api/health/db",
+        authLogin: "/api/auth/login",
+        authMe: "/api/auth/me",
+        electives: "/api/electives",
+        electivesMetrics: "/api/electives/metrics/seats",
+        studentsProfile: "/api/students/me/profile",
+        facultySections: "/api/faculty/my-sections",
+        adminSettings: "/api/admin/settings",
+      },
+    };
+  }
+}
+
 @ApiTags("Health")
 @Controller("health")
 export class HealthController {
@@ -43,4 +71,3 @@ export class HealthController {
     }
   }
 }
-
