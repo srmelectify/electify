@@ -29,7 +29,8 @@
     "test": "npm run test --workspace=@electify/web",
     "test:unit": "npm run test:unit --workspace=@electify/web",
     "test:e2e": "npm run test:e2e --workspace=@electify/web",
-    "test:sqa": "node tests/sqa-verify.js"
+    "test:sqa": "node tests/sqa-verify.js",
+    "generate:pdf": "node generate-pdf-manuals.js"
   },
   "devDependencies": {
     "concurrently": "^9.1.2",

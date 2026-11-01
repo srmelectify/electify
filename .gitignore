@@ -50,6 +50,7 @@ next-env.d.ts
 # scratch
 /scratch
 *.pdf
+!documentation/pdfs/*.pdf
 
 # isolated next output (e2e server, verification builds)
 /.next-*/
