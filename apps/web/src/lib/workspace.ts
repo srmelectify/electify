@@ -225,20 +225,38 @@ export async function listClassesForScope(scope: StaffScope, sessionId: string):
       semester: cohortSessionTerms.currentSemester,
       termConfirmed: cohortSessionTerms.confirmed,
     })
-    .from(cohortSessionTerms)
-    .innerJoin(academicBatches, eq(academicBatches.id, cohortSessionTerms.academicBatchId))
-    .innerJoin(sections, eq(sections.academicBatchId, academicBatches.id))
+    .from(sections)
+    .innerJoin(academicBatches, eq(sections.academicBatchId, academicBatches.id))
     .innerJoin(programmes, eq(programmes.id, academicBatches.programmeId))
     .innerJoin(departments, eq(departments.id, programmes.departmentId))
-    .where(and(eq(cohortSessionTerms.academicSessionId, sessionId), eq(sections.isActive, true), classFilter(scope)))
+    .leftJoin(
+      cohortSessionTerms,
+      and(
+        eq(cohortSessionTerms.academicBatchId, academicBatches.id),
+        eq(cohortSessionTerms.academicSessionId, sessionId)
+      )
+    )
+    .where(
+      and(
+        eq(sections.isActive, true),
+        classFilter(scope),
+        or(
+          eq(cohortSessionTerms.academicSessionId, sessionId),
+          scope.tutorSectionIds.length > 0 ? inArray(sections.id, scope.tutorSectionIds) : sql`false`
+        )
+      )
+    )
     .orderBy(asc(programmes.name), asc(academicBatches.admissionYear), asc(sections.label));
 
   const tutorSet = new Set(scope.tutorSectionIds);
   return rows.map((r) => ({
     ...r,
+    studyYear: r.studyYear ?? 1,
+    semester: r.semester ?? 1,
+    termConfirmed: r.termConfirmed ?? true,
     label: cohortLabel({ ...r, programmeName: r.programmeName }),
     years: cohortYears(r),
-    stage: stageLabel(r),
+    stage: stageLabel({ ...r, studyYear: r.studyYear ?? 1, semester: r.semester ?? 1 }),
     isTutorClass: tutorSet.has(r.sectionId),
   }));
 }

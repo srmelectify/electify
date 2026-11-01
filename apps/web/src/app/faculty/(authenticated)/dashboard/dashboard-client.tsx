@@ -247,7 +247,7 @@ function TutorView({ m }: { m: any }) {
               </Link>
             </div>
           </div>
-        ) : total === 0 ? (
+        ) : !m.hasClass ? (
           <div className="flex flex-col items-start gap-4 sm:flex-row sm:items-center sm:justify-between">
             <div className="space-y-1">
               <h2 className="text-2xl font-light tracking-display text-fg">No class chosen for this timeline yet</h2>
@@ -261,7 +261,10 @@ function TutorView({ m }: { m: any }) {
           <div className="flex flex-col items-start gap-4 sm:flex-row sm:items-center sm:justify-between">
             <div>
               <h2 className="text-2xl font-light tracking-display text-fg">No registration window yet</h2>
-              <p className="mt-1 text-sm text-fg-muted">Create one for your section, then set its opening and closing times.</p>
+              <p className="mt-1 text-sm text-fg-muted">
+                {m.activeClassLabel ? `Assigned to ${m.activeClassLabel}. ` : ""}
+                Create one for your section, then set its opening and closing times.
+              </p>
             </div>
             <Link href="/faculty/window" className={buttonVariants({ variant: "primary", size: "lg" })}>
               Set up a window <ArrowRight className="size-4" />

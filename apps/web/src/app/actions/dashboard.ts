@@ -115,6 +115,8 @@ export async function getClassTutorMetrics() {
 
   if (!activeSectionId) {
     return { 
+      hasClass: false,
+      activeClassLabel: null,
       totalStudents: 0, registeredCount: 0,
       courseOptionsCount: 0, groupsCount: 0, allocationRate: 0,
       activeEvent: null, recentRegistrations: [], pendingStudents: []
@@ -248,6 +250,8 @@ export async function getClassTutorMetrics() {
   const pendingStudents = allStudents.filter(s => !uniqueStudents.has(s.id));
 
   return {
+    hasClass: true,
+    activeClassLabel: ws.activeClass?.label ?? null,
     totalStudents, 
     registeredCount, 
     courseOptionsCount,
