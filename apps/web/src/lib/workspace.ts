@@ -199,6 +199,7 @@ function classFilter(scope: StaffScope) {
 
 /** Sessions available for staff workspace selection (all non-archived academic timelines). */
 export async function listSessionsForScope(scope: StaffScope): Promise<WorkspaceSession[]> {
+  void scope;
   const rows = await db.select().from(academicSessions).orderBy(asc(academicSessions.startYear));
   return rows.map(toSession);
 }
