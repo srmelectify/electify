@@ -124,12 +124,12 @@ async function seed() {
     }
   }
 
-  // Fast bulk section provisioning across all batches
+  // Fast bulk section provisioning across all batches (A through H)
   await pool.query(`
     INSERT INTO sections (label, academic_batch_id, is_active)
     SELECT s.label, b.id, true
     FROM academic_batches b
-    CROSS JOIN (VALUES ('A'), ('B'), ('C'), ('D'), ('E')) AS s(label)
+    CROSS JOIN (VALUES ('A'), ('B'), ('C'), ('D'), ('E'), ('F'), ('G'), ('H')) AS s(label)
     ON CONFLICT (label, academic_batch_id) DO NOTHING;
   `);
 
