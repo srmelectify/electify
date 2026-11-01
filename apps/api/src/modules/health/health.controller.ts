@@ -1,6 +1,6 @@
 import { Controller, Get, Inject } from "@nestjs/common";
 import { ApiTags, ApiOperation, ApiResponse } from "@nestjs/swagger";
-import { DB_POOL } from "../database/database.constants";
+import { DB_POOL } from "../database/database.module";
 import { Pool } from "pg";
 
 @ApiTags("Health")

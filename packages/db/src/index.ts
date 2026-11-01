@@ -1,3 +1,5 @@
+import * as dotenv from "dotenv";
+dotenv.config({ path: [".env.local", ".env", "../../.env.local", "../../.env"] });
 import { drizzle } from "drizzle-orm/node-postgres";
 import { Pool, PoolConfig } from "pg";
 import dns from "node:dns";

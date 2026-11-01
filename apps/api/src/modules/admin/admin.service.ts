@@ -1,5 +1,5 @@
 import { Injectable, Inject } from "@nestjs/common";
-import { DRIZZLE_DB } from "../database/database.constants";
+import { DRIZZLE_DB } from "../database/database.module";
 import {
   systemSettings,
   academicSessions,
@@ -7,7 +7,7 @@ import {
   faculties,
   departments,
   programmes,
-} from "@electify/db/schema";
+} from "@electify/db";
 import { desc } from "drizzle-orm";
 
 @Injectable()

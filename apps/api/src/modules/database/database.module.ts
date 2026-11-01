@@ -1,6 +1,8 @@
 import { Global, Module, OnModuleInit, Logger } from "@nestjs/common";
 import { db, pool, ensureDatabaseReady } from "@electify/db";
-import { DRIZZLE_DB, DB_POOL } from "./database.constants";
+
+export const DRIZZLE_DB = "DRIZZLE_DB";
+export const DB_POOL = "DB_POOL";
 
 @Global()
 @Module({
@@ -28,4 +30,3 @@ export class DatabaseModule implements OnModuleInit {
     }
   }
 }
-

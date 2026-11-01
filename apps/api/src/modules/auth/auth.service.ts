@@ -1,6 +1,6 @@
 import { Injectable, UnauthorizedException, Inject } from "@nestjs/common";
-import { DRIZZLE_DB } from "../database/database.constants";
-import { users } from "@electify/db/schema";
+import { DRIZZLE_DB } from "../database/database.module";
+import { users } from "@electify/db";
 import { eq, or } from "drizzle-orm";
 import * as bcrypt from "bcryptjs";
 import { SignJWT, jwtVerify } from "jose";

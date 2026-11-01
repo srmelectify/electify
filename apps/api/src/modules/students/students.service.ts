@@ -1,6 +1,6 @@
 import { Injectable, Inject, NotFoundException } from "@nestjs/common";
-import { DRIZZLE_DB } from "../database/database.constants";
-import { users, studentRegistrations, electives } from "@electify/db/schema";
+import { DRIZZLE_DB } from "../database/database.module";
+import { users, studentRegistrations, electives } from "@electify/db";
 import { eq, desc } from "drizzle-orm";
 
 @Injectable()
