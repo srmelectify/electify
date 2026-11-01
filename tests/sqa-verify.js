@@ -147,6 +147,18 @@ async function runSQA() {
     record("Session Policy", "Multi-Session Policy Check", false, err.message);
   }
 
+  // ── 5. Faculty & Admin Portal Actions Integrity ─────────────
+  console.log("\n--- 5. PORTAL LIFECYCLE & ROLE ACTIONS INTEGRITY ---");
+  try {
+    const portalActionsOutput = execSync("node tests/verify-portal-actions.js", { encoding: "utf8" });
+    const passedActions = portalActionsOutput.includes("ALL PORTAL ACTIONS & MUTATIONS PASSED!");
+    record("Portal Actions", "Class Tutor (Section Scope & Signup Codes)", passedActions);
+    record("Portal Actions", "Course Coordinator (Dept Scope & Staff Invites)", passedActions);
+    record("Portal Actions", "System Admin (Audit Logging & System Settings)", passedActions);
+  } catch (err) {
+    record("Portal Actions", "Portal Actions Verification", false, err.message);
+  }
+
   // ── Summary ──────────────────────────────────────────────────
   console.log("\n=================================================");
   const total = results.length;

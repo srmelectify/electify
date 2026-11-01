@@ -817,8 +817,8 @@ const masterHtml = wrapHtml(
 
   <h2>4. Automated SQA Verification (Zero-Defect Status)</h2>
   <div class="alert alert-tip">
-    <strong>Automated Quality Assurance: 22 Tests Passed / 0 Failed (100% Pass Rate)</strong><br/>
-    Execute anytime with <code>npm run test:sqa</code> to verify Supabase connectivity, 27 schema tables, multi-device RBAC policies, proxy routing, and REST endpoints.
+    <strong>Automated Quality Assurance: 25 Tests Passed / 0 Failed (100% Pass Rate)</strong><br/>
+    Execute anytime with <code>npm run test:sqa</code> to verify Supabase connectivity, 27 schema tables, multi-device RBAC policies, Class Tutor & Coordinator actions, and REST endpoints.
   </div>
   `
 );
