@@ -16,3 +16,4 @@ export async function fetchNestApi(path: string, init?: RequestInit): Promise<Re
   const url = getNestApiUrl(formattedPath);
   return fetch(url, init);
 }
+

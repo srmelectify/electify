@@ -53,3 +53,4 @@ export async function PATCH(req: NextRequest, ctx: { params: Promise<{ path?: st
 export async function DELETE(req: NextRequest, ctx: { params: Promise<{ path?: string[] }> }) {
   return proxyRequest(req, await ctx.params);
 }
+
