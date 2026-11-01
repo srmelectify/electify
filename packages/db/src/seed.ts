@@ -167,38 +167,42 @@ async function seed() {
 
   // ── Faculty Roles (Course Coordinator & Class Tutor) ───────
   console.log("  → Core Faculty Accounts...");
-  const coordPassword = "Angel@12345";
-  const coordHash = await bcrypt.hash(coordPassword, 12);
+  const facultyPassword = process.env.INITIAL_FACULTY_PASSWORD || "Electify@2026";
+  const facultyHash = await bcrypt.hash(facultyPassword, 12);
   await db
     .insert(schema.users)
     .values({
       name: "Angel B",
       email: "angelb1@srmist.edu.in",
-      passwordHash: coordHash,
-      role: "COURSE_COORDINATOR",
+      passwordHash: facultyHash,
+      role: "CLASS_TUTOR",
       employeeId: "EMP-ANGEL-01",
       isActive: true,
       isEligible: true,
     })
-    .onConflictDoNothing({ target: schema.users.email });
+    .onConflictDoUpdate({
+      target: schema.users.email,
+      set: { role: "CLASS_TUTOR", passwordHash: facultyHash, isActive: true }
+    });
 
-  const tutorPassword = "Tutor@12345";
-  const tutorHash = await bcrypt.hash(tutorPassword, 12);
   await db
     .insert(schema.users)
     .values({
       name: "Sabenabanu",
-      email: "sabenaba@srmist.edu.in",
-      passwordHash: tutorHash,
-      role: "CLASS_TUTOR",
-      employeeId: "EMP-TUTOR-01",
+      email: "sabenabanu@srmist.edu.in",
+      passwordHash: facultyHash,
+      role: "COURSE_COORDINATOR",
+      employeeId: "EMP-SABENA-01",
       isActive: true,
       isEligible: true,
     })
-    .onConflictDoNothing({ target: schema.users.email });
+    .onConflictDoUpdate({
+      target: schema.users.email,
+      set: { role: "COURSE_COORDINATOR", passwordHash: facultyHash, isActive: true }
+    });
 
-  console.log(`    ✓ angelb1@srmist.edu.in / Angel@12345 (Course Coordinator)`);
-  console.log(`    ✓ sabenaba@srmist.edu.in / Tutor@12345 (Class Tutor)`);
+  console.log(`    ✓ angelb1@srmist.edu.in / ${facultyPassword} (Class Tutor)`);
+  console.log(`    ✓ sabenabanu@srmist.edu.in / ${facultyPassword} (Course Coordinator)`);
 
   // ── System Settings ─────────────────────────────────────────
   console.log("  → System Settings...");
