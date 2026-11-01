@@ -1,0 +1,543 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* ════════════════════════════════════════════════════════════════════
+   ELECTIFY DESIGN TOKENS — "warm editorial"
+   Eggshell paper, ink type, whisper-weight display headlines, pill
+   actions. The logo brings its own colours (midnight, scholar gold);
+   gold appears only in the logo and the product sphere, never as UI
+   chrome. Status colours exist only to carry meaning and always travel
+   with a text label.
+   Every text pairing was checked for WCAG 2.2 AA on canvas and all
+   surfaces; spec greys that failed on taupe/stone were deepened.
+   ════════════════════════════════════════════════════════════════════ */
+
+:root {
+  color-scheme: light;
+
+  /* Surfaces: eggshell → taupe → stone */
+  --bg: oklch(99.2% 0.001 60);            /* #FDFCFC eggshell canvas */
+  --surface-1: oklch(99.2% 0.001 60);     /* cards sit on the canvas with a whisper shadow */
+  --surface-2: oklch(96.5% 0.003 67.8);   /* #F5F3F1 warm taupe: wells, feature cards, hover */
+  --surface-3: oklch(93.2% 0.006 75.4);   /* #EBE8E4 stone: pressed, icon plates */
+  --border: oklch(93.2% 0.006 75.4);      /* #EBE8E4 hairline */
+  --border-strong: oklch(64.3% 0.014 75.3); /* ≥3:1 on canvas + taupe: control outlines */
+  --overlay: oklch(20% 0.01 60 / 0.28);
+
+  /* Ink + warm greys */
+  --text: oklch(14.7% 0.004 49.2);        /* #0C0A09 ink (warm, not pure black) */
+  --text-muted: oklch(42% 0.011 73.6);    /* graphite-smoke: secondary copy */
+  --text-subtle: oklch(52% 0.014 75.3);   /* smoke, deepened to pass on stone */
+
+  /* Primary action is ink. No coloured CTA fills. */
+  --primary: oklch(14.7% 0.004 49.2);
+  --primary-strong: oklch(26% 0.006 50);  /* hover: lifts toward graphite */
+  --primary-text: oklch(14.7% 0.004 49.2);
+  --primary-fg: oklch(99.2% 0.001 60);
+  --brand-to: var(--primary);
+
+  /* Logo (from the "Electify Logo" canvas). Exact brand hexes, not tuned. */
+  --brand-ink: #0E1330;                   /* Midnight: bars + wordmark */
+  --brand-gold: #E9B44C;                  /* Scholar Gold: the dot */
+  --brand-midnight: #0E1330;              /* the check, in both themes */
+
+  /* Product sparks: visuals only, never chrome */
+  --spark-violet: oklch(51.1% 0.274 263.7); /* #0447FF */
+  --spark-orange: oklch(66.2% 0.228 35.6);  /* #FF4704 */
+  --spark-pink: oklch(74% 0.16 350);
+
+  /* Meaning */
+  --live: oklch(51.1% 0.274 263.7);       /* violet spark as the live signal */
+  --live-text: oklch(51.1% 0.274 263.7);
+  --success: oklch(50.5% 0.120 155.8);
+  --success-text: oklch(50.5% 0.120 155.8);
+  --warning: oklch(52.7% 0.117 66.7);
+  --warning-text: oklch(52.7% 0.117 66.7);
+  --danger: oklch(54.1% 0.188 34.5);
+  --danger-strong: oklch(54.1% 0.188 34.5);
+  --danger-text: oklch(54.1% 0.188 34.5);
+  --on-accent: oklch(99.2% 0.001 60);     /* label on success/warning/live fills */
+
+  --ring: var(--text);
+
+  /* Whisper elevation, warm-tinted. Edges come from hairline borders. */
+  --elevation-1: 0 1px 1px 0 oklch(25% 0.01 60 / 0.04), 0 2px 4px 0 oklch(25% 0.01 60 / 0.04);
+  --elevation-2: 0 0 0 0.5px oklch(25% 0.01 60 / 0.06), 0 2px 4px 0 oklch(25% 0.01 60 / 0.04), 0 10px 24px -10px oklch(25% 0.01 60 / 0.14);
+  --elevation-3: 0 0 0 0.5px oklch(25% 0.01 60 / 0.08), 0 32px 72px -24px oklch(25% 0.01 60 / 0.28);
+}
+
+/* Screen-only so printed pages (receipts, reports) always use light tokens. */
+@media screen {
+  .dark {
+    color-scheme: dark;
+
+    --bg: oklch(16% 0.003 67.6);           /* #0E0D0C warm ink canvas */
+    --surface-1: oklch(19.6% 0.004 84.6);  /* #161513 */
+    --surface-2: oklch(22.8% 0.005 67.6);  /* #1E1C1A */
+    --surface-3: oklch(26.7% 0.007 67.5);  /* #282522 */
+    --border: oklch(27.5% 0.007 67.5);     /* #2A2724 */
+    --border-strong: oklch(51.6% 0.009 73.7);
+    --overlay: oklch(0% 0 0 / 0.62);
+
+    --text: oklch(95.9% 0.005 78.3);       /* #F3F1EE */
+    --text-muted: oklch(76% 0.012 75.3);
+    --text-subtle: oklch(64% 0.014 75.3);
+
+    /* Inverted pill: paper on ink */
+    --primary: oklch(95.9% 0.005 78.3);
+    --primary-strong: oklch(88% 0.008 75);
+    --primary-text: oklch(95.9% 0.005 78.3);
+    --primary-fg: oklch(16% 0.003 67.6);
+
+    --live: oklch(64.4% 0.191 259.1);
+    --live-text: oklch(64.4% 0.191 259.1);
+    --brand-ink: #F5F6F9;                 /* Mist: the reverse lockup */
+    --success: oklch(62.6% 0.120 155.7);
+    --success-text: oklch(62.6% 0.120 155.7);
+    --warning: oklch(64.6% 0.124 70.5);
+    --warning-text: oklch(64.6% 0.124 70.5);
+    --danger: oklch(66.2% 0.188 34.7);
+    --danger-strong: oklch(66.2% 0.188 34.7);
+    --danger-text: oklch(66.2% 0.188 34.7);
+    --on-accent: oklch(16% 0.003 67.6);
+
+    --elevation-1: inset 0 1px 0 0 oklch(100% 0 0 / 0.03), 0 1px 2px 0 oklch(0% 0 0 / 0.35);
+    --elevation-2: inset 0 1px 0 0 oklch(100% 0 0 / 0.04), 0 12px 28px -10px oklch(0% 0 0 / 0.6);
+    --elevation-3: inset 0 1px 0 0 oklch(100% 0 0 / 0.05), 0 32px 72px -20px oklch(0% 0 0 / 0.7);
+  }
+}
+
+/* ─── Remove Tailwind defaults so nothing outside the system can render ─── */
+@theme {
+  --color-*: initial;
+  --radius-*: initial;
+  --shadow-*: initial;
+  --text-*: initial;
+  --animate-bounce: initial;
+  --animate-ping: initial;
+}
+
+/* ─── Semantic utilities ───────────────────────────────────────────────── */
+@theme inline {
+  --color-canvas: var(--bg);
+  --color-surface: var(--surface-1);
+  --color-surface-2: var(--surface-2);
+  --color-surface-3: var(--surface-3);
+  --color-border: var(--border);
+  --color-border-strong: var(--border-strong);
+  --color-overlay: var(--overlay);
+
+  --color-fg: var(--text);
+  --color-fg-muted: var(--text-muted);
+  --color-fg-subtle: var(--text-subtle);
+
+  --color-primary: var(--primary);
+  --color-primary-strong: var(--primary-strong);
+  --color-primary-text: var(--primary-text);
+  --color-primary-fg: var(--primary-fg);
+  --color-brand-to: var(--brand-to);
+
+  --color-spark-violet: var(--spark-violet);
+  --color-spark-orange: var(--spark-orange);
+
+  --color-brand-ink: var(--brand-ink);
+  --color-brand-gold: var(--brand-gold);
+  --color-brand-midnight: var(--brand-midnight);
+  --color-live: var(--live);
+  --color-live-text: var(--live-text);
+  --color-success: var(--success);
+  --color-success-text: var(--success-text);
+  --color-warning: var(--warning);
+  --color-warning-text: var(--warning-text);
+  --color-warning-fg: var(--on-accent);
+  --color-danger: var(--danger);
+  --color-danger-strong: var(--danger-strong);
+  --color-danger-text: var(--danger-text);
+  --color-on-accent: var(--on-accent);
+
+  --color-ring: var(--ring);
+
+  --shadow-1: var(--elevation-1);
+  --shadow-2: var(--elevation-2);
+  --shadow-3: var(--elevation-3);
+  --shadow: var(--elevation-1);
+}
+
+@theme {
+  /* Radius: pills for actions and tags, 20px cards, 24px panels,
+     10px small controls, 6px for tiny glyph boxes. */
+  --radius-badge: 9999px;    /* tags, badges, tab pills, tooltips */
+  --radius-tight: 0.375rem;  /* 6  checkboxes, keycaps */
+  --radius-control: 0.625rem; /* 10 inputs, menu rows, small elements */
+  --radius-popover: 1rem;    /* 16 menus, popovers, palette rows container */
+  --radius-card: 1.25rem;    /* 20 cards, dialogs */
+  --radius-panel: 1.5rem;    /* 24 large feature panels */
+  --radius: 0.625rem;
+
+  /* Type: Inter for everything, light 300 for display, Geist Mono for codes. */
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, "SFMono-Regular", Menlo, monospace;
+  --tracking-display: -0.02em;
+
+  --text-2xs: 0.6875rem;
+  --text-2xs--line-height: 1.45;
+  --text-2xs--letter-spacing: 0.01em;
+  --text-xs: 0.75rem;
+  --text-xs--line-height: 1.5;
+  --text-xs--letter-spacing: 0.005em;
+  --text-sm: 0.875rem;
+  --text-sm--line-height: 1.5;
+  --text-sm--letter-spacing: 0.01em;
+  --text-base: 1rem;
+  --text-base--line-height: 1.5;
+  --text-base--letter-spacing: 0.01em;
+  --text-lg: 1.125rem;
+  --text-lg--line-height: 1.6;
+  --text-xl: 1.25rem;
+  --text-xl--line-height: 1.35;
+  --text-2xl: clamp(1.375rem, 1.25rem + 0.5vw, 1.5rem);
+  --text-2xl--line-height: 1.25;
+  --text-2xl--letter-spacing: -0.01em;
+  --text-3xl: clamp(1.625rem, 1.4rem + 1vw, 2rem);
+  --text-3xl--line-height: 1.13;
+  --text-3xl--letter-spacing: -0.02em;
+  --text-4xl: clamp(1.875rem, 1.55rem + 1.4vw, 2.25rem);
+  --text-4xl--line-height: 1.17;
+  --text-4xl--letter-spacing: -0.02em;
+  --text-5xl: clamp(2.25rem, 1.75rem + 2.2vw, 3rem);
+  --text-5xl--line-height: 1.08;
+  --text-5xl--letter-spacing: -0.02em;
+  --text-6xl: clamp(2.75rem, 1.9rem + 3.8vw, 4rem);
+  --text-6xl--line-height: 1.04;
+  --text-6xl--letter-spacing: -0.025em;
+  /* Countdown figures */
+  --text-display-xl: clamp(3.25rem, 1.6rem + 8vw, 6.5rem);
+  --text-display-xl--line-height: 1;
+  --text-display-xl--letter-spacing: -0.04em;
+
+  /* Motion — CSS mirrors of src/lib/motion.ts */
+  --ease-snappy: cubic-bezier(0.2, 0.9, 0.1, 1);
+  --ease-gentle: cubic-bezier(0.16, 1, 0.3, 1);
+  --animate-enter: enter 520ms var(--ease-gentle) both;
+  --animate-sphere: sphere-drift 18s ease-in-out infinite;
+
+  @keyframes enter {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: none; }
+  }
+  @keyframes sphere-drift {
+    0%, 100% { transform: rotate(0deg) scale(1); }
+    50% { transform: rotate(14deg) scale(1.04); }
+  }
+}
+
+/* ─── Base ─────────────────────────────────────────────────────────────── */
+@layer base {
+  *,
+  ::before,
+  ::after {
+    border-color: var(--border);
+  }
+
+  * {
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+  }
+
+  html {
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+  }
+
+  body {
+    background-color: var(--bg);
+    color: var(--text);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+
+  ::selection {
+    background-color: color-mix(in oklab, var(--primary) 28%, transparent);
+  }
+
+  /* One icon stroke weight across the product (explicit strokeWidth props still win). */
+  svg.lucide[stroke-width="2"] {
+    stroke-width: 1.75;
+  }
+
+  /* Numbers that sit in columns line up. */
+  td,
+  th {
+    font-variant-numeric: tabular-nums;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--ring);
+    outline-offset: 2px;
+  }
+
+  /* 16px inputs stop iOS Safari zooming on focus */
+  input,
+  select,
+  textarea {
+    font-size: max(16px, 1em);
+  }
+
+  @media (min-width: 48rem) {
+    input,
+    select,
+    textarea {
+      font-size: inherit;
+    }
+  }
+
+  /* 44px minimum touch targets on touch devices; mouse UIs keep their density. */
+  @media (pointer: coarse) {
+    button,
+    [role="button"],
+    [role="tab"],
+    [role="menuitem"],
+    [role="option"],
+    a[data-touch-target] {
+      min-height: 44px;
+    }
+    button:where(:not([data-inline])),
+    [role="button"] {
+      min-width: 44px;
+    }
+  }
+
+  [hidden] {
+    display: none !important;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+}
+
+/* ─── Utilities ────────────────────────────────────────────────────────── */
+@utility pb-safe {
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+@utility pt-safe {
+  padding-top: env(safe-area-inset-top, 0px);
+}
+@utility pl-safe {
+  padding-left: env(safe-area-inset-left, 0px);
+}
+@utility pr-safe {
+  padding-right: env(safe-area-inset-right, 0px);
+}
+
+@utility scrollbar-thin {
+  scrollbar-width: thin;
+  scrollbar-color: var(--border-strong) transparent;
+}
+
+/* Primary CTA surface. The system has no coloured CTA fills: ink with a faint top sheen. */
+@utility bg-brand {
+  background-color: var(--primary);
+  background-image: linear-gradient(180deg, color-mix(in oklab, var(--primary-fg) 9%, transparent), transparent 55%);
+}
+
+/* The product "sphere": a soft orb in the logo's Scholar Gold, light falling
+   from the top left into warm amber. Visuals only, never chrome. */
+@utility bg-sphere {
+  background:
+    radial-gradient(circle at 30% 24%, color-mix(in oklab, var(--brand-gold) 30%, white) 0%, transparent 42%),
+    radial-gradient(circle at 76% 78%, color-mix(in oklab, var(--brand-gold) 62%, oklch(42% 0.11 45)) 0%, transparent 54%),
+    radial-gradient(circle at 20% 76%, color-mix(in oklab, var(--brand-gold) 78%, oklch(62% 0.16 40)) 0%, transparent 56%),
+    radial-gradient(circle at 68% 28%, color-mix(in oklab, var(--brand-gold) 82%, white) 0%, transparent 64%),
+    var(--brand-gold);
+}
+
+/* Hide scrollbars on horizontal pill rows; content stays scrollable. */
+@utility scrollbar-none {
+  scrollbar-width: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+/* Inner top highlight for filled controls (adds physical edge in both themes). */
+@utility highlight-inset {
+  box-shadow: inset 0 1px 0 0 oklch(100% 0 0 / 0.18), inset 0 -1px 0 0 oklch(0% 0 0 / 0.12);
+}
+
+/* Skeleton shimmer — a slow sheen across the placeholder. */
+@utility skeleton {
+  position: relative;
+  overflow: hidden;
+  background-color: var(--surface-2);
+  &::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    transform: translateX(-100%);
+    background: linear-gradient(90deg, transparent, color-mix(in oklab, var(--surface-1) 70%, transparent), transparent);
+    animation: shimmer 1.6s var(--ease-gentle) infinite;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    &::after {
+      display: none;
+    }
+  }
+}
+
+/* Cursor spotlight on cards: JS writes --spot-x/--spot-y, CSS paints. */
+@utility spotlight {
+  position: relative;
+  isolation: isolate;
+  &::before {
+    content: "";
+    position: absolute;
+    inset: -1px;
+    z-index: -1;
+    border-radius: inherit;
+    padding: 1px;
+    background: radial-gradient(
+      220px circle at var(--spot-x, 50%) var(--spot-y, -40%),
+      color-mix(in oklab, var(--primary) 55%, transparent),
+      transparent 70%
+    );
+    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    opacity: 0;
+    transition: opacity 200ms var(--ease-gentle);
+    pointer-events: none;
+  }
+  @media (hover: hover) {
+    &:hover::before {
+      opacity: 1;
+    }
+  }
+}
+
+/* Keycap glyph for shortcuts. */
+@utility keycap {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 1.375rem;
+  height: 1.375rem;
+  padding-inline: 0.375rem;
+  border-radius: --theme(--radius-tight);
+  border: 1px solid var(--border);
+  border-bottom-width: 2px;
+  background: linear-gradient(var(--surface-1), var(--surface-2));
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  line-height: 1;
+}
+
+@keyframes shimmer {
+  to {
+    transform: translateX(100%);
+  }
+}
+
+/* Live indicator halo — slow, soft, never an alarm. */
+@keyframes halo {
+  0% {
+    transform: scale(1);
+    opacity: 0.55;
+  }
+  70%,
+  100% {
+    transform: scale(2.6);
+    opacity: 0;
+  }
+}
+
+@utility animate-halo {
+  animation: halo 2.4s var(--ease-gentle) infinite;
+  @media (prefers-reduced-motion: reduce) {
+    animation: none;
+    opacity: 0;
+  }
+}
+
+/* Check mark that draws itself (receipt, confirmations). */
+@keyframes draw {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+/* ─── Seat mark (sign-in hero) ──────────────────────────────────────────
+   The E as a seat map: taken seats in brand ink, open seats as outlines,
+   the logo's gold dot as the confirmed seat. See components/auth/seat-mark.tsx. */
+@layer components {
+  .seat-mark .seat {
+    transform-box: fill-box;
+    transform-origin: center;
+    transition:
+      scale 260ms var(--ease-gentle),
+      fill 320ms var(--ease-gentle),
+      stroke 320ms var(--ease-gentle);
+  }
+  .seat-mark .seat-open {
+    fill: transparent;
+    stroke: color-mix(in oklab, var(--brand-ink) 22%, transparent);
+    stroke-width: 0.8;
+  }
+  .seat-mark .seat-open:hover {
+    stroke: color-mix(in oklab, var(--brand-ink) 55%, transparent);
+  }
+  /* Someone else takes an open seat for a moment: live counts. */
+  .seat-mark .seat-open.seat-live {
+    fill: color-mix(in oklab, var(--brand-ink) 28%, transparent);
+    stroke: transparent;
+  }
+  .seat-mark .seat-taken,
+  .seat-mark .seat-claimed {
+    fill: var(--brand-ink);
+    animation: seat-take 520ms var(--ease-snappy) both;
+  }
+  .seat-mark .seat-nope {
+    animation: seat-nope 380ms var(--ease-snappy);
+  }
+  .seat-mark .seat-dot {
+    transform-box: fill-box;
+    transform-origin: center;
+    animation: seat-dot 680ms var(--ease-gentle) both;
+  }
+  .seat-mark .seat-check {
+    stroke-dasharray: 1;
+    stroke-dashoffset: 1;
+    animation: draw 460ms var(--ease-gentle) forwards;
+  }
+}
+
+@keyframes seat-take {
+  0% { opacity: 0; transform: scale(0.35); }
+  60% { opacity: 1; transform: scale(1.14); }
+  100% { opacity: 1; transform: scale(1); }
+}
+
+/* "Already taken": a short refusal, no double booking. */
+@keyframes seat-nope {
+  0%, 100% { transform: translateX(0); }
+  20% { transform: translateX(-1.6px); }
+  45% { transform: translateX(1.4px); }
+  70% { transform: translateX(-0.8px); }
+}
+
+@keyframes seat-dot {
+  0% { opacity: 0; transform: scale(0.2); }
+  65% { opacity: 1; transform: scale(1.1); }
+  100% { opacity: 1; transform: scale(1); }
+}
