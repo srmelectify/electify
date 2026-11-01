@@ -135,6 +135,18 @@ async function runSQA() {
   const unauthSwitchSec = await fetch(`${webBase}/api/switch-section`, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({}) });
   record("Frontend Guard", "POST /api/switch-section (Guarded 401 when Unauthenticated)", unauthSwitchSec.status === 401);
 
+  // ── 4. Session Sentinel & Multi-Device RBAC Policy ───────────
+  console.log("\n--- 4. MULTI-DEVICE & SESSION SENTINEL POLICY ---");
+  const { execSync } = require("child_process");
+  try {
+    const multiSessionOutput = execSync("npx tsx ../../tests/multi-session-policy.test.ts", { cwd: "apps/web", encoding: "utf8" });
+    const passedAll = multiSessionOutput.includes("ALL MULTI-SESSION POLICY TESTS PASSED! (100%)");
+    record("Session Policy", "Staff (Tutor, Coordinator, Admin) 3 Active Devices Allowed", passedAll, "Max 3 devices");
+    record("Session Policy", "Student Strict Single-Device Sentinel Enforced", passedAll, "Immediate prior session revocation");
+  } catch (err) {
+    record("Session Policy", "Multi-Session Policy Check", false, err.message);
+  }
+
   // ── Summary ──────────────────────────────────────────────────
   console.log("\n=================================================");
   const total = results.length;

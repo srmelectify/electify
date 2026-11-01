@@ -97,9 +97,47 @@ export function setTestSession(session: UserSession | null | undefined) {
 }
 
 /**
+ * Maximum concurrent active sessions allowed per role:
+ * - Staff (CLASS_TUTOR, COURSE_COORDINATOR, SYSTEM_ADMIN): up to 3 devices simultaneously
+ * - Students: strictly 1 device (single active session sentinel)
+ */
+export const MAX_STAFF_SESSIONS = 3;
+export const MAX_STUDENT_SESSIONS = 1;
+
+export function getMaxSessionsForRole(role: string): number {
+  if (role === "CLASS_TUTOR" || role === "COURSE_COORDINATOR" || role === "SYSTEM_ADMIN") {
+    return MAX_STAFF_SESSIONS;
+  }
+  return MAX_STUDENT_SESSIONS;
+}
+
+/**
+ * Parses active session IDs from the currentSessionId database text field.
+ * Supports legacy single string UUID, comma-separated IDs, or JSON array.
+ */
+export function parseActiveSessions(raw: string | null | undefined): string[] {
+  if (!raw) return [];
+  const trimmed = raw.trim();
+  if (!trimmed) return [];
+  if (trimmed.startsWith("[") && trimmed.endsWith("]")) {
+    try {
+      const parsed = JSON.parse(trimmed);
+      if (Array.isArray(parsed)) {
+        return parsed.filter((id): id is string => typeof id === "string" && id.trim().length > 0);
+      }
+    } catch {}
+  }
+  if (trimmed.includes(",")) {
+    return trimmed.split(",").map((s) => s.trim()).filter(Boolean);
+  }
+  return [trimmed];
+}
+
+/**
  * Gets the current session from cookies.
- * Enforces single active session per login:
- * If the user has logged in from another device or window, previous sessions are revoked.
+ * Enforces session policy per role:
+ * - For Students: Strictly single active session per login. Logging in from another device/window revokes prior sessions.
+ * - For Staff (Class Tutor, Course Coordinator, System Admin): Allows up to 3 concurrent active devices.
  */
 export async function getSession(): Promise<UserSession | null> {
   if (testSessionOverride !== undefined) {
@@ -114,7 +152,7 @@ export async function getSession(): Promise<UserSession | null> {
         if (
           !userRecord ||
           !userRecord.isActive ||
-          (userRecord.currentSessionId && userRecord.currentSessionId !== testSessionOverride.sessionId)
+          (userRecord.currentSessionId && !parseActiveSessions(userRecord.currentSessionId).includes(testSessionOverride.sessionId))
         ) {
           return null;
         }
@@ -129,9 +167,9 @@ export async function getSession(): Promise<UserSession | null> {
   const session = await verifyJWT(token);
   if (!session) return null;
 
-  // Enforce single session per login: the token's session id must match the
-  // user's current session, and the account must still be active.
-  // For students, multiple concurrent logins are strictly restricted.
+  // Enforce session policy per role:
+  // - Students: Strictly single session per login (1 device).
+  // - Staff (Class Tutor, Course Coordinator, Admin): Up to 3 active sessions across devices.
   if (session.sessionId || session.role === "STUDENT") {
     let revoked = false;
     try {
@@ -143,19 +181,26 @@ export async function getSession(): Promise<UserSession | null> {
 
       if (!userRecord || !userRecord.isActive) {
         revoked = true;
-      } else if (session.role === "STUDENT") {
-        // Strictly restrict multiple logins for students:
-        // Must have sessionId and it must match the database's currentSessionId exactly.
-        if (!session.sessionId || !userRecord.currentSessionId || userRecord.currentSessionId !== session.sessionId) {
-          revoked = true;
+      } else {
+        const activeSessions = parseActiveSessions(userRecord.currentSessionId);
+        if (session.role === "STUDENT") {
+          // Strictly single device for students:
+          // Must have sessionId and it must match the latest active session.
+          if (!session.sessionId || activeSessions.length === 0 || activeSessions[activeSessions.length - 1] !== session.sessionId) {
+            revoked = true;
+          }
+        } else {
+          // Up to 3 active devices for staff (Class Tutor, Course Coordinator, Admin):
+          // Current device's sessionId must be present in the active sessions list.
+          if (!session.sessionId || !activeSessions.includes(session.sessionId)) {
+            revoked = true;
+          }
         }
-      } else if (session.sessionId && userRecord.currentSessionId && userRecord.currentSessionId !== session.sessionId) {
-        revoked = true;
       }
 
       if (!revoked && userRecord?.name) session.name = cleanDisplayName(userRecord.name);
     } catch (err) {
-      console.warn("Session single-login verification warning (fallback to active check):", err);
+      console.warn("Session verification warning (fallback to active check):", err);
       try {
         const [fallbackRecord] = await db
           .select({ isActive: users.isActive, name: users.name })

@@ -545,6 +545,11 @@ const tutorHtml = wrapHtml(
     </ol>
   </div>
 
+  <div class="alert alert-security" style="background:#f0fdf4; border-color:#86efac; color:#166534;">
+    <strong>Multi-Device Access Enabled (Up to 3 Active Devices):</strong><br/>
+    Class Tutors are permitted up to <strong>3 simultaneous active devices</strong> (e.g. laptop, mobile phone, and classroom podium). If a 4th device signs in, only the oldest device is automatically rotated out. (Students remain strictly restricted to 1 single device).
+  </div>
+
   <h2>2. Generating Class Signup Codes for Your Students</h2>
   <div class="step-card step-card-highlight">
     <div class="step-header">
@@ -649,6 +654,10 @@ const coordHtml = wrapHtml(
       <span class="step-title">Generating Staff Invite Codes</span>
     </div>
     <p>Course Coordinators can provision Class Tutor accounts securely via invite codes:</p>
+    <div class="alert alert-security" style="background:#f0fdf4; border-color:#86efac; color:#166534; margin-bottom: 10px;">
+      <strong>Multi-Device Access Enabled (Up to 3 Active Devices):</strong><br/>
+      Course Coordinators, Class Tutors, and Administrators are permitted up to <strong>3 simultaneous active devices</strong> (laptop, mobile phone, office workstation). (Students remain strictly restricted to 1 active device).
+    </div>
     <ol>
       <li>Sign in at: <a href="https://electifysrm.vercel.app/login" style="color:#0284c7; font-weight:700;">https://electifysrm.vercel.app/login</a> (e.g. <code>sabenabanu@srmist.edu.in</code> / <code>Electify@2026</code>).</li>
       <li>Navigate to <strong>Invite Codes</strong> (<code>/faculty/invites</code>).</li>
@@ -801,15 +810,15 @@ const masterHtml = wrapHtml(
   <h2>3. Technical Concurrency & Safeguards</h2>
   <ul>
     <li><strong>PostgreSQL Atomic Row-Locking:</strong> Seat reservations use <code>SELECT ... FOR UPDATE</code> within ACID transactions. Zero waitlists and zero overbooking.</li>
-    <li><strong>Single-Session Sentinel:</strong> Prevents multi-device sniping by invalidating prior JWT signatures immediately upon new sign-in.</li>
+    <li><strong>Role-Based Session Sentinel:</strong> Strict single-device enforcement for students to eliminate multi-tab sniping; multi-device access enabled up to <strong>3 active devices</strong> simultaneously for Class Tutors, Course Coordinators, and System Administrators.</li>
     <li><strong>NTP Clock Synchronization:</strong> Client countdown timers are synchronized to server NTP time to eliminate client-side device tampering.</li>
     <li><strong>Tamper-Evident Receipts:</strong> Formatted as <code>ELC-2026-EVEN-XXXXX</code> with cryptographic verification signatures.</li>
   </ul>
 
   <h2>4. Automated SQA Verification (Zero-Defect Status)</h2>
   <div class="alert alert-tip">
-    <strong>Automated Quality Assurance: 20 Tests Passed / 0 Failed (100% Pass Rate)</strong><br/>
-    Execute anytime with <code>npm run test:sqa</code> to verify Supabase connectivity, 27 schema tables, role guards, proxy routing, and REST endpoints.
+    <strong>Automated Quality Assurance: 22 Tests Passed / 0 Failed (100% Pass Rate)</strong><br/>
+    Execute anytime with <code>npm run test:sqa</code> to verify Supabase connectivity, 27 schema tables, multi-device RBAC policies, proxy routing, and REST endpoints.
   </div>
   `
 );

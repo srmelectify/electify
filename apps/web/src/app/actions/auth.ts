@@ -11,6 +11,8 @@ import {
   getSession,
   signPasswordUpgradeTicket,
   verifyPasswordUpgradeTicket,
+  parseActiveSessions,
+  getMaxSessionsForRole,
   type UserSession,
 } from "@/lib/auth";
 import { eq, and, asc, desc, sql } from "drizzle-orm";
@@ -184,12 +186,34 @@ async function startSession(user: AuthUser) {
     }
   }
 
-  // Enforce 1 session per login: Generate new unique session ID
+  // Generate unique session ID for this device login
   const sessionId = crypto.randomUUID();
+  const maxSessions = getMaxSessionsForRole(user.role);
+
   try {
+    let newSessionValue: string = sessionId;
+    if (maxSessions > 1) {
+      // For staff (CLASS_TUTOR, COURSE_COORDINATOR, SYSTEM_ADMIN):
+      // Allow multiple active devices (up to 3 simultaneous sessions)
+      const [existingUser] = await db
+        .select({ currentSessionId: users.currentSessionId })
+        .from(users)
+        .where(eq(users.id, user.id))
+        .limit(1);
+
+      const active = parseActiveSessions(existingUser?.currentSessionId);
+      active.push(sessionId);
+      // Retain only the most recent up to maxSessions (evicts oldest session if > 3 devices)
+      const trimmed = active.slice(-maxSessions);
+      newSessionValue = JSON.stringify(trimmed);
+    } else {
+      // For students: strictly single active session (1 device). Immediate revocation of any older session.
+      newSessionValue = sessionId;
+    }
+
     await db
       .update(users)
-      .set({ currentSessionId: sessionId, updatedAt: new Date() })
+      .set({ currentSessionId: newSessionValue, updatedAt: new Date() })
       .where(eq(users.id, user.id));
   } catch (sessionErr) {
     console.warn("Could not save currentSessionId (column may be pending):", sessionErr);
@@ -396,7 +420,22 @@ export async function logout() {
   const session = await getSession();
   if (session?.userId) {
     try {
-      await db.update(users).set({ currentSessionId: null }).where(eq(users.id, session.userId));
+      if (session.role === "STUDENT") {
+        await db.update(users).set({ currentSessionId: null }).where(eq(users.id, session.userId));
+      } else {
+        // For staff (CLASS_TUTOR, COURSE_COORDINATOR, SYSTEM_ADMIN):
+        // Only revoke this device's specific session ID, keeping other active devices logged in!
+        const [userRecord] = await db
+          .select({ currentSessionId: users.currentSessionId })
+          .from(users)
+          .where(eq(users.id, session.userId))
+          .limit(1);
+
+        const active = parseActiveSessions(userRecord?.currentSessionId);
+        const remaining = active.filter((id) => id !== session.sessionId);
+        const updatedValue = remaining.length > 0 ? (remaining.length === 1 ? remaining[0] : JSON.stringify(remaining)) : null;
+        await db.update(users).set({ currentSessionId: updatedValue }).where(eq(users.id, session.userId));
+      }
     } catch {}
   }
   await clearSessionCookie();

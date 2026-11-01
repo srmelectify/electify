@@ -134,7 +134,7 @@ Once you have created your account:
 3. Enter your password and click **Sign in to Electify**.
 
 > [!NOTE]
-> Electify enforces a **Single Active Session** security policy. If you log in on a second device or browser tab, your previous session is automatically revoked to prevent unauthorized access and ticket sniping.
+> Electify enforces a **Strict Single Active Session** security policy for students. If a student logs in on a second device or browser tab, the previous session is immediately revoked to prevent unauthorized access and ticket sniping. (Faculty and Administrators are permitted up to 3 active devices simultaneously).
 
 ### 3.3 Student Dashboard Overview
 Upon logging in, your personalized dashboard displays:
@@ -200,6 +200,9 @@ Before the registration window opens, you can thoroughly review all offered elec
 3. Upon first sign-in, the **Academic Session Selector** (`/faculty/session-select`) appears.
 4. Select the current working academic year (e.g., `2025–2026 Even Semester`).
 5. Click **Enter Workspace**.
+
+> [!TIP]
+> **Multi-Device Support for Faculty & Staff**: Class Tutors, Course Coordinators, and System Administrators are permitted up to **3 simultaneous active devices** (e.g. office workstation, mobile phone, and classroom podium/laptop). If a 4th device logs in, only the oldest device session is automatically retired, leaving your newer sessions active without interruption.
 
 ### 4.2 Generating Class Signup Codes for Students
 As a Class Tutor, you onboard your students by generating an official Class Signup Code:
@@ -305,10 +308,13 @@ During a live registration event:
 
 ## 6. System Administrator Guide
 
-### 6.1 Root Security & Single-Session Sentinel
+### 6.1 Root Security & Role-Based Session Sentinel
 - The primary root admin account `srmelectify@gmail.com` possesses immutable superuser privileges.
 - Root accounts cannot be demoted, deactivated, or deleted by any API route or interface.
 - All sessions are cryptographically signed with HS256 JWT tokens using `process.env.JWT_SECRET`.
+- **Role-Based Session Sentinel Architecture**:
+  * **Students**: Strictly enforced to **1 single active session**. Any attempt to open a secondary tab or second device immediately revokes earlier sessions to eradicate bot-driven sniping and credential sharing.
+  * **Staff & Administrators (Class Tutor, Course Coordinator, System Admin)**: Permitted up to **3 simultaneous active devices**. Faculty can comfortably monitor registrations from a laptop, smartphone, and classroom smartboard concurrently. Logging in on a 4th device only rotates out the oldest device. Logging out on one device only signs out that specific device.
 
 ### 6.2 Global System Settings & Maintenance Mode
 1. Navigate to **System Settings** (`/faculty/settings`).
