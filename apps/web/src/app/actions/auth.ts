@@ -320,14 +320,14 @@ export async function login(formData: {
     let user: AuthUser | undefined = foundUser;
 
     // Self-healing: if logging in with default master admin and no record exists, auto-provision it
-    if (!user && (normalizedEmail === "electify@srmist.edu.in" || normalizedEmail === "admin@electify.edu") && (password === "Electify@Root2026!" || password === "Admin@12345")) {
+    if (!user && (normalizedEmail === "srmelectify@gmail.com" || normalizedEmail === "electify@srmist.edu.in" || normalizedEmail === "admin@electify.edu") && (password === "Electify@2026" || password === "Electify@Root2026!" || password === "Admin@12345")) {
       try {
         const adminHash = await bcrypt.hash(password, 12);
         const [seededAdmin] = await db
           .insert(users)
           .values({
             name: "Root Administrator",
-            email: "electify@srmist.edu.in",
+            email: normalizedEmail,
             passwordHash: adminHash,
             role: "SYSTEM_ADMIN",
             employeeId: "EMP-ADMIN",
@@ -340,7 +340,7 @@ export async function login(formData: {
         if (seededAdmin) {
           user = seededAdmin;
         } else {
-          const [existingAdmin] = await db.select(authUserColumns).from(users).where(eq(users.email, "electify@srmist.edu.in")).limit(1);
+          const [existingAdmin] = await db.select(authUserColumns).from(users).where(eq(users.email, normalizedEmail)).limit(1);
           user = existingAdmin;
         }
       } catch (provisionErr) {

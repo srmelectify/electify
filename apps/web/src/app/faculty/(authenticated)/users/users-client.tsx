@@ -380,7 +380,7 @@ export function UsersClient({
       header: "Role",
       mobileWide: true,
       cell: (u) => {
-        const isRoot = u.email === "electify@srmist.edu.in" || u.email === "admin@electify.edu";
+        const isRoot = u.email === "srmelectify@gmail.com" || u.email === "electify@srmist.edu.in" || u.email === "admin@electify.edu";
         return (
           <div className="flex items-center gap-1.5 flex-wrap">
             <StatusBadge status={u.role} size="sm" />
@@ -417,7 +417,7 @@ export function UsersClient({
       mobile: "actions",
       hideable: false,
       cell: (u) => {
-        const isRoot = u.email === "electify@srmist.edu.in" || u.email === "admin@electify.edu";
+        const isRoot = u.email === "srmelectify@gmail.com" || u.email === "electify@srmist.edu.in" || u.email === "admin@electify.edu";
         return (
           <div className="flex items-center justify-end gap-1.5">
             {u.role === "CLASS_TUTOR" ? (

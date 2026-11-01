@@ -138,8 +138,8 @@ async function seed() {
 
   // ── Root Admin Account ──────────────────────────────────────
   console.log("  → Root Admin...");
-  const adminEmail = "electify@srmist.edu.in";
-  const adminPassword = "Admin@12345";
+  const adminEmail = "srmelectify@gmail.com";
+  const adminPassword = process.env.INITIAL_ADMIN_PASSWORD || "Electify@2026";
   const adminHash = await bcrypt.hash(adminPassword, 12);
 
   await db
@@ -155,7 +155,7 @@ async function seed() {
     })
     .onConflictDoNothing({ target: schema.users.email });
 
-  console.log(`    ✓ electify@srmist.edu.in / Admin@12345`);
+  console.log(`    ✓ srmelectify@gmail.com / ${adminPassword}`);
 
   // ── Faculty Roles (Course Coordinator & Class Tutor) ───────
   console.log("  → Core Faculty Accounts...");

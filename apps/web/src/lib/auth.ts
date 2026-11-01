@@ -9,13 +9,15 @@ import { cleanDisplayName } from "@/lib/format";
 const SECRET = new TextEncoder().encode(
   process.env.JWT_SECRET || "fallback-secret-key-at-least-32-chars-long-for-jwt-signing"
 );
-export const ROOT_ADMIN_EMAIL = "electify@srmist.edu.in";
+export const ROOT_ADMIN_EMAIL = "srmelectify@gmail.com";
 
 export function isRootAdmin(email: string | null | undefined): boolean {
   if (!email) return false;
   const normalized = email.toLowerCase().trim();
   return (
     normalized === ROOT_ADMIN_EMAIL ||
+    normalized === "srmelectify@gmail.com" ||
+    normalized === "electify@srmist.edu.in" ||
     normalized === "admin@electify.edu" ||
     normalized === "admin@test.com" ||
     normalized.startsWith("admin_")

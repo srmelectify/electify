@@ -78,7 +78,7 @@ export async function GET(request: Request) {
       const [adminUser] = await db
         .select({ id: users.id, email: users.email, role: users.role, isActive: users.isActive })
         .from(users)
-        .where(or(eq(users.email, "electify@srmist.edu.in"), eq(users.email, "admin@electify.edu")))
+        .where(or(eq(users.email, "srmelectify@gmail.com"), eq(users.email, "electify@srmist.edu.in"), eq(users.email, "admin@electify.edu")))
         .limit(1);
 
       if (adminUser) {
@@ -108,13 +108,13 @@ export async function GET(request: Request) {
             message: "Set INITIAL_ADMIN_PASSWORD before provisioning the admin account in production.",
           };
         } else {
-          const adminPassword = process.env.INITIAL_ADMIN_PASSWORD || "Admin@12345";
+          const adminPassword = process.env.INITIAL_ADMIN_PASSWORD || "Electify@2026";
           const adminHash = await bcrypt.hash(adminPassword, 12);
           await db
             .insert(users)
             .values({
               name: "Root Administrator",
-              email: "electify@srmist.edu.in",
+              email: "srmelectify@gmail.com",
               passwordHash: adminHash,
               role: "SYSTEM_ADMIN",
               employeeId: "EMP-ADMIN",
@@ -126,7 +126,7 @@ export async function GET(request: Request) {
           result.database.adminAccount = {
             exists: true,
             created: true,
-            email: "electify@srmist.edu.in",
+            email: "srmelectify@gmail.com",
             role: "SYSTEM_ADMIN",
             isActive: true,
           };
