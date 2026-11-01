@@ -357,3 +357,4 @@ During a live registration event:
 
 ---
 *Electify — Developed for SRM Institute of Science and Technology. Copyright © 2026. All rights reserved.*
+
