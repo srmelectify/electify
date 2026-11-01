@@ -1,9 +1,9 @@
 "use client";
 
-import { useState, useRef, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { realtimeConfigured, supabase } from "@/lib/supabase";
-import { Download, KeyRound, MoreHorizontal, Pencil, Plus, ShieldCheck, Sparkles, Trash2, Upload, Users } from "lucide-react";
-import { createStudent, importStudentsCSV, updateStudent, deleteStudent, unlockStudentRegistration, deleteMultipleStudentsTutor, deleteAllSectionStudents, getPendingPasswordResetsForTutor } from "@/app/actions/tutor";
+import { KeyRound, MoreHorizontal, Pencil, Plus, ShieldCheck, Sparkles, Trash2, Users } from "lucide-react";
+import { createStudent, updateStudent, deleteStudent, unlockStudentRegistration, deleteMultipleStudentsTutor, deleteAllSectionStudents, getPendingPasswordResetsForTutor } from "@/app/actions/tutor";
 import { useRouter } from "next/navigation";
 import { TutorSectionOnboarding } from "@/components/tutor-section-onboarding";
 import { ClassSignupCodeModal } from "@/components/tutor/class-signup-code-modal";
@@ -64,7 +64,6 @@ export function SectionClient({ reportData, session }: { reportData: ReportData;
   const [newRegNo, setNewRegNo] = useState("");
   const [newEmail, setNewEmail] = useState("");
   const [isSaving, setIsSaving] = useState(false);
-  const [isUploading, setIsUploading] = useState(false);
   const [pending, setPending] = useState<Pending | null>(null);
   const [confirmOpen, setConfirmOpen] = useState(false);
   const [onlineUserIds, setOnlineUserIds] = useState<Set<string>>(new Set());
@@ -86,7 +85,6 @@ export function SectionClient({ reportData, session }: { reportData: ReportData;
     refreshPendingResets();
   }, [refreshPendingResets]);
 
-  const fileInputRef = useRef<HTMLInputElement>(null);
   const router = useRouter();
 
   // Presence tracking
@@ -220,48 +218,7 @@ export function SectionClient({ reportData, session }: { reportData: ReportData;
     }
   }
 
-  function handleDownloadTemplate() {
-    const headers = ["Name", "Register Number", "Email"];
-    const csvContent = "data:text/csv;charset=utf-8," + headers.join(",") + "\n" + "John Doe,RA2211003010123,jd1234@srmist.edu.in";
-    const encodedUri = encodeURI(csvContent);
-    const link = document.createElement("a");
-    link.setAttribute("href", encodedUri);
-    link.setAttribute("download", "student_import_template.csv");
-    document.body.appendChild(link);
-    link.click();
-    link.remove();
-  }
 
-  async function handleFileUpload(e: React.ChangeEvent<HTMLInputElement>) {
-    const file = e.target.files?.[0];
-    if (!file) return;
-
-    setIsUploading(true);
-    try {
-      const text = await file.text();
-      const lines = text.split("\n").map(l => l.trim()).filter(l => l.length > 0);
-
-      // Assume first line is header
-      const dataLines = lines.slice(1);
-      const parsedData = dataLines.map(line => {
-        const [name, registerNumber, email] = line.split(",").map(val => val.trim());
-        return { name, registerNumber, email };
-      }).filter(s => s.name && s.registerNumber && s.email);
-
-      if (parsedData.length === 0) {
-        throw new Error("No valid data found in CSV. Make sure you match the template.");
-      }
-
-      const result = await importStudentsCSV(parsedData);
-      toast.success(`Imported ${result.imported} students. Skipped ${result.skipped} (already exist).`);
-      router.refresh();
-    } catch (err: any) {
-      toast.error("Error importing CSV: " + err.message);
-    } finally {
-      setIsUploading(false);
-      if (fileInputRef.current) fileInputRef.current.value = "";
-    }
-  }
 
   const columns: Column<Student>[] = [
     {
@@ -409,19 +366,11 @@ export function SectionClient({ reportData, session }: { reportData: ReportData;
             <Button onClick={openAddModal}>
               <Plus /> Add student
             </Button>
-            <input type="file" accept=".csv" className="hidden" ref={fileInputRef} onChange={handleFileUpload} />
-            <Button variant="secondary" onClick={() => fileInputRef.current?.click()} loading={isUploading} loadingText="Importing">
-              <Upload /> Import CSV
-            </Button>
             <Menu>
               <MenuTrigger render={<Button variant="secondary" size="icon" aria-label="More actions" />}>
                 <MoreHorizontal />
               </MenuTrigger>
               <MenuContent align="end">
-                <MenuItem onClick={handleDownloadTemplate}>
-                  <Download /> Download CSV template
-                </MenuItem>
-                <MenuSeparator />
                 <MenuItem tone="danger" disabled={students.length === 0} onClick={() => ask({ kind: "all" })}>
                   <Trash2 /> Delete all students
                 </MenuItem>
@@ -466,10 +415,10 @@ export function SectionClient({ reportData, session }: { reportData: ReportData;
               compact
               icon={<Users />}
               title="No students yet"
-              description="Add students one by one or import the CSV template."
+              description="Add students with the button above or share your class signup code."
               action={
-                <Button size="sm" variant="secondary" onClick={handleDownloadTemplate}>
-                  <Download /> CSV template
+                <Button size="sm" onClick={openAddModal}>
+                  <Plus /> Add student
                 </Button>
               }
             />
